@@ -5,8 +5,24 @@
 \usepackage[italian]{babel}	% Lingua del documento
 
 \usepackage{graphicx} % Grafica
+\usepackage{xcolor} % \color
 
 \usepackage{amsmath,amssymb,amsthm}	% Pacchetti per la matematica
+
+\usepackage{listings} % listati di codice
+\lstdefinestyle{customc}{
+	numbers=left,
+	breaklines=true,
+	frame=tb,
+	xleftmargin=\parindent,
+	language=C,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	stringstyle=\color{orange}
+}
+\lstset{escapechar=@,style=customc}
 
 \begin{document}
 

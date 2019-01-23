@@ -1,6 +1,30 @@
 \chapter{Liste}
-Esistono principalmente due tipi di implementazioni di liste:
+Una \textbf{lista} è una struttura di dati astratta che permette di contenere un insieme di elementi. Attraverso la gestione dinamica della memoria non è inoltre necessario specificare la dimensione della struttura al momento della compilazione (attraverso costanti o \textit{define}).
+Principalmente è possibile implementare le liste in due modi:
 \begin{itemize}
-	\item \textbf{semplicemente concatenata}: ogni elemento ha un puntatore all'elemento successivo
-	\item \textbf{doppiamente concatenata}: ogni elemento ha due puntatori: uno all'elemento predente e l'altro all'elemento successivo.
+	\item \textbf{semplicemente concatenate (sc)}: ogni elemento ha un puntatore all'elemento successivo
+	\item \textbf{doppiamente concatenata (dc)}: ogni elemento ha due puntatori: uno all'elemento precedente e l'altro all'elemento successivo
 \end{itemize}
+
+Seppur la presenza di un ulteriore puntatore nell'implementazione \textit{dc} possa sembrare un'inutile ridondanza, in realtà permette di semplificare e ottimizzare alcuni algoritmi.\\
+Entrambe le strutture presentano un metodo di accesso \textit{sequenziale} e non casuale (tipico degli array).
+
+\begin{lstlisting}[title={Implementazione lista singolarmente concatenata}]
+typedef struct Tnodo{
+    Tdato dato;
+    Tnodo *next;
+
+    Tnodo(Tdato d);
+    Tnodo(Tdato d, Tnodo *n);
+} Tnodo;
+
+\end{lstlisting}
+
+\begin{lstlisting}[title={Implementazione lista doppiamente concatenata}]
+struct Tnodo {
+    Tdato dato;
+    Tnodo *next;
+    Tnodo *prev;
+};
+typedef Tnodo *ListaDoppiamenteConcatenata;
+\end{lstlisting}
