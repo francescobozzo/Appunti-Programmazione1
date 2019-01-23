@@ -3,7 +3,6 @@ La \textbf{tabella di hash} è una struttura che permette di effettuare ricerca 
 La ricerca consiste nell'associare ad ogni \textit{chiave} i suoi rispettivi \textit{dati satellite}. Un semplice esempio è un database finalizzato a memorizzare dei dispositivi: ciascun record infatti ha associato una chiave (es. MAC Address) e dei dati satellite (es. marca, caratteristiche, ecc.). L'insieme di chiavi $U$ deve essere piccolo.
 
 \section{Tavole a indirizzamento diretto}
-~
 Il metodo attraverso una \textbf{tavola a indirizzamento diretto} utilizza un vettore $V$ di puntatori, di dimensione $|U|$.\\
 Quando si inserisce un elemento nella tavola, viene generato dinamicamente il corrispondente putatore ai dati satellite, che viene inserito nella cella di $V$ corrispondente alla propria chiave. Dunque vi è una corrispondenza biunivoca tra celle di $V$ e le chiavi possibili.
 
