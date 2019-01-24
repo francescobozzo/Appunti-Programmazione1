@@ -53,7 +53,8 @@ Lista ricerca(const Lista ls, Tdato d){
 
 	
 \section{Inserimento di un elemento}
-Nel caso di una lista \textit{sc}, quando la si scorre per inserire un elemento in coda o in ordine, è necessario tenere memoria anche dell'elemento precedente a quello in cui si sta visitando.
+Nel caso di una lista \textit{sc}, quando la si scorre per inserire un elemento in coda o in ordine, è necessario tenere memoria anche dell'elemento precedente a quello in cui si sta visitando.\\
+\`{E} molto oneroso effuare operazioni in coda: è necessario infatti visitare tutta la lista.
 \begin{lstlisting} [title={Inserimento in testa, in coda, ordinato in una lista \textit{sc}}]
 Lista inserisci_in_testa(Lista ls, Tdato d){
     return new Tnodo(d, ls);
@@ -143,3 +144,112 @@ ListaDoppia inserisci_ord_doppia(ListaDoppia ls, Tdato d){
 }
 \end{lstlisting}
 
+\section{Eliminazione di un elemento}
+Come per l'inserimento, è molto oneroso effuare operazioni in coda: è necessario infatti visitare tutta la lista.
+\begin{lstlisting}[title={Eliminazione di un elemento, di un elemento in testa e in coda con lista \textit{sc}}]
+Lista delete_el(Lista ls, Tdato d){
+    Lista temp = ls;
+    Lista pred = NULL;
+    while (!is_empty_lista(temp)){
+    if (temp->dato.isEqual(d)){
+        if (pred != NULL){
+            pred->next = temp->next;
+            delete temp;
+            return ls;
+        } else {
+            Lista res = temp->next;
+            delete temp;
+            return res;
+        }
+    }
+    pred = temp;
+    temp = temp->next;
+    }
+}
+
+Lista delete_testa(Lista ls){
+    if (ls != NULL) {
+        Lista temp = ls;
+        ls = ls->next;
+        delete temp;
+    }
+    return ls;
+}
+
+Lista delete_coda(Lista ls){
+    if (ls != NULL) {
+        Lista temp = ls;
+        Lista pred = NULL;
+        while (!is_empty_lista(temp->next)){
+            pred = temp;
+            temp = temp->next;
+        }
+        if (pred == NULL){
+            return delete_testa(ls);
+        }
+        delete temp;
+        pred->next = NULL;
+    }
+    return ls;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[title={Eliminazione di un elemento, di un elemento in testa e in coda con lista \textit{dc}}]
+ListaDoppia delete_el_doppia(ListaDoppia ls, Tdato d){
+    if (ls != NULL){
+        if (ls->dato.isEqual(d)){
+            return delete_testa_doppia(ls);
+        }
+        ListaDoppia temp = ls;
+        while ((temp!=NULL) && (!temp->dato.isEqual(d))){
+            temp = temp->next;
+        }
+        if (temp != NULL){
+            if (temp->next != NULL){
+                temp->next->prev = temp->prev;
+            }
+            temp->prev->next = temp->next;
+            delete temp;
+        }
+    }
+    return ls;
+}
+
+ListaDoppia delete_testa_doppia(ListaDoppia ls){
+    ListaDoppia temp = ls->next;
+    delete ls;
+    temp->prev = NULL;
+    return temp;
+}
+
+ListaDoppia delete_coda_doppia(ListaDoppia ls){
+    if (ls != NULL){
+        ListaDoppia temp = ls;
+        while (temp->next != NULL){
+            temp = temp->next;
+        }
+        if(temp->prev != NULL){
+            temp->prev->next = NULL;
+            delete temp;
+        } else {
+            delete temp;
+            return init_doppia();
+        }
+    }
+    return ls;
+}
+\end{lstlisting}
+
+\section{Calcolare la lunghezza di una lista}
+Sia per le liste \textit{sc} e \textit{dc} l'implementazione è la medesima:
+\begin{lstlisting}
+unsigned int length_lista(const Lista ls){
+    unsigned int len = 0;
+    Lista temp = ls;
+    while (!is_empty_lista(temp)){
+        len++;
+        temp = temp->next;
+    }
+    return len;
+}
+\end{lstlisting}
