@@ -1,1 +1,39 @@
 \chapter{Teoria sulla complessità}
+\section{La funzione tempo di esecuzione}
+Dato un qualsiasi algoritmo, è possibile ottenere la funzione $T(n)$ ad esso associata, ossia la \textbf{funzione tempo di esecuzione} rispetto alla dimensione dell'input $n$. Questa funzione prende in considerazione solamente il numero di istruzioni e non aspetti dinamici d'esecuzione.\\
+Studiando l'andamento asintotico di $T(n)$, si può notare che rilevante ciò che cresce più velocemente:
+\textit{es} $T(n)=a+bn+cn^2 \Rightarrow T(n) = \varTheta(n^2)$.
+\subsection*{Il caso peggiore, migliore e medio}
+Si possono costruire \textit{tre} funzioni $T(n)$:
+\begin{itemize}[noitemsep, nolistsep]
+	\item $T_\text{peggiore}(n)$ nel caso peggiore
+	\item $T_\text{migliore}(n)$ nel caso migliore
+	\item $T_\text{medio}(n)$ nel caso medio
+\end{itemize}
+\vspace{10px}
+Di ciascuna di esse si può determinare l'andamento asintotico attraverso le notazioni successivamente fornite.
+
+\section{Notazione per l'andamento asintotico}
+\subsection*{Notazione limite superiore $O$-grande}
+\begin{gather*}
+f(n)=O(g(n))\\
+\text{se } \exists n_0 >0, \exists c_2 >0 \text{ tc. } f(n)\leq c_2 g(n) \forall n>n_0
+\end{gather*}
+
+\subsection*{Notazione limite inferiore $\varOmega$-omega}
+\begin{gather*}
+f(n)=\varOmega(g(n))\\
+\text{se } \exists n_0 >0, \exists c_1 >0 \text{ tc. } f(n)\geq c_1 g(n) \forall n>n_0
+\end{gather*}
+
+\subsection*{Notazione limite superiore e inferiore $\varTheta$-theta}
+\begin{gather*}
+f(n)=\varTheta(g(n))\\
+\text{se } \exists n_0 >0, \exists c_1>0,c_2>0 \text{ tc. } c_1g(n)\leq f(n)\leq c_2 g(n) \forall n>n_0
+\end{gather*}
+
+\section{Definizione di complessità}
+
+\paragraph{Complessità di un algoritmo} La complessità di un algoritmo equivale alla misura del numero di istruzioni da eseguire per risolvere il problema.
+
+\paragraph{Complessità di un problema} La complessità di un problema equivale alla complessità del migliore algoritmo che lo risolve.
