@@ -1,3 +1,89 @@
 \chapter{Algoritmi di ricerca e ordinamento}
+
 \section{Algoritmi di ricerca}
+Un \textbf{algoritmo di ricerca} permette di trovare un elemento avente determinate caratteristiche all'interno di un insieme di elementi identificati da una chiave.
+
+\subsection{Ricerca sequenziale}
+Consiste nel scorrere tutti gli elementi fino a quando non si trova quello desiderato:
+\begin{lstlisting}[title={Ricerca sequenziale}]
+int sequential_search(char v[], int len, char key){
+    int i;
+    for (i=0; i<len; i++){
+        if (v[i] == key){
+            return i;
+        }
+    }
+    return -1;
+}
+\end{lstlisting}
+In questo caso, la funzione $T(n)$ è pari:
+\begin{itemize}[noitemsep, nolistsep]
+	\item nel caso peggiore: $n$.
+	\item nel caso migliore $1$.
+	\item nel caso medio $\frac{n}{2}$.
+\end{itemize}
+
+\subsection{Ricerca sequenziale con sentinella}
+Come sopra, ma evita un confronto: posiziono al termine del vettore l'elemento da cercare:
+\begin{lstlisting}[title={Ricerca sequenziale con sentinella}]
+// la funzione chiamante deve assicurare la presenza di un elemento vuoto alla fine del vettore
+int sequential_search_sentinella(char v[], int len, char key){
+    int i;
+    v[len] = key;
+    for (i=0; v[i]!=key; i++){	}
+
+    if (i == len) {
+        return -1;
+    }
+    return i;
+}
+\end{lstlisting}
+
+\subsection{Ricerca sequenziale su vettore ordinato}
+Questa ricerca sfrutta il fatto di ricevere un vettore ordinato in input:
+\begin{lstlisting}[title={Ricerca sequenziale su vettore ordinato}]
+int sequential_search_order(char v[], int len, char key){
+    int i;
+    for (i=0; key>=v[i] && i<len; i++){
+        if (v[i] == key){
+            return i;
+        }
+    }
+    return -1;
+}
+\end{lstlisting}
+
+\subsection{Ricerca binaria}
+Si presuppone che l'input sia un insieme ordinato di elementi con la possibilità di accesso casuale (\textit{es.} array):
+\begin{lstlisting}[title={Ricerca binaria}]
+int binary_search(char v[], int len, char key){
+    int bottom = 0;
+    int top = len - 1;
+    int mid;
+
+    while (bottom <= top){
+        mid = (top + bottom) / 2;
+        if (v[mid] == key) {
+            return mid;
+        }
+        if (key < v[mid]){
+            top = mid - 1;
+        } else {
+            bottom = mid + 1;
+        }
+    }
+    return -1;
+}
+\end{lstlisting}
+In questo caso, la funzione $T(n)$ è pari:
+\begin{itemize}[noitemsep, nolistsep]
+	\item nel caso peggiore: $\log_2n$.
+	\item nel caso migliore $1$.
+	\item nel caso medio $\log_2n$.
+\end{itemize}
+
 \section{Algoritmi di ordinamento}
+
+\subsection{Insertion sort}
+
+\subsection{Merge Sort}
