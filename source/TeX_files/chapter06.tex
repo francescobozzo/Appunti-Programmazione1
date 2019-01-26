@@ -1,0 +1,181 @@
+\chapter{Alberi binari di ricerca}
+
+\section{Definizioni di albero}
+\begin{itemize}[noitemsep]
+	\item Un \textit{albero} è un grafo non orientato, connesso e privo di cicli.
+	\item Attraverso la \textit{ricorsione}:
+	\begin{itemize}[noitemsep, nolistsep]
+		\item l'insieme vuoto $\phi$ è un albero binario.
+		\item $T_s$ e $T_d$ sono alberi binari ed $r$ è un nodo: la terna $(r, T_s, T_d)$ è un albero binario.
+	\end{itemize}
+	\item Un \textit{albero binario di ricerca} è un albero in cui ogni nodo ha al più due figli tale che ogni nodo è maggiore (o uguale) dei valori dei nodi del suo sottoalbero sinistro e minore (o uguale) dei valori dei nodi del suo sottoalbero destro.
+\end{itemize}
+Alcune sigle per identificare un albero binario di ricerca sono \textit{ABR} e \textit{BST} (dall'inglese \textit{binary search tree}).
+
+\begin{lstlisting}[title={Implementazione di un albero binario di ricerca}]
+typedef struct Tnodo {
+Tdato dato;
+Tnodo *sx;
+Tnodo *dx;
+Tnodo *parent; //non utilizzato in lab
+} Tnodo;
+typedef ABR *Tnodo;
+\end{lstlisting}
+
+\section{Proprietà}
+\begin{enumerate}[noitemsep]
+	\item Un ABR non ha una rappresentazione univoca. Alcuni rappresentazioni infatti risultano più bilanciate di altre.
+	\item Un ABR si dice \textit{bilanciato} se
+	\item \textit{Altezza}: lunghezza massima tra radice e una foglia, ossia $h = n_\text{livelli}-1$.
+	\item \textit{Foglia}: nodo senza figli.
+	\item \textit{Radice}: nodo senza padre.
+	\item \textit{Cammino} di un ABR: somma per ciascun nodo la sua distanza dalla radice.
+	\item Il percorso dalla radice ad ogni foglia è unico.
+\end{enumerate}
+
+
+\section{Algoritmi}
+\subsection{Visita in preordine}
+\begin{lstlisting}[title={Visita in preordine di un ABR}]
+void visita_preordine(BST tree){
+    if (tree != NULL){
+        tree->dato.print();
+        visita_preordine(tree->sx);
+        visita_preordine(tree->dx);
+    }
+}
+\end{lstlisting}
+
+\subsection{Visita in ordine}
+Attraverso una stampa della visita in ordine si ottiene un elenco ordinato.
+\begin{lstlisting}[title={Visita in ordine di un ABR}]
+void visita_ordine(BST tree){
+    if (tree != NULL){
+        visita_ordine(tree->sx);
+        tree->dato.print();
+        visita_ordine(tree->dx);
+    }
+}
+\end{lstlisting}
+
+\subsection{Visita in postordine}
+\begin{lstlisting}[title={Visita in postordine di un ABR}]
+void visita_postordine(BST tree){
+    if (tree != NULL){
+        visita_postordine(tree->sx);
+        visita_postordine(tree->dx);
+        tree->dato.print();
+    }
+}
+\end{lstlisting}
+
+\subsection{Visita in level-ordine}
+Nella visita in level-ordine si percorrono i nodi per ciascun livello.
+
+\subsection{Ricerca di un elemento}
+In maniera ricorsiva, cerca fra i sottoalberi di un nodo. Nel caso peggiore ha complessità $O(h)$.
+\begin{lstlisting}[title={Ricerca ricorsiva di un elemento in un ABR}]
+Tnodo *search_element(BST tree, Tdato d){
+    if (tree->dato.isEqual(d)){
+        return tree;
+    } else if (d.isLowerThan(tree->dato)){
+        return search_element(tree->sx, d);
+    } else {
+        return search_element(tree->dx, d);
+    }
+}
+\end{lstlisting}
+
+\subsection{Ricerca del minimo}
+Si continua iterativamente a percorrere il sottoalbero sinistro. Nel caso peggiore ha complessità $O(h)$.
+\begin{lstlisting}[title={Ricerca del minimo in un ABR}]
+Tdato minimo(BST tree){
+    BST temp = tree;
+    while (temp->sx != NULL){
+        temp = temp->sx;
+    }
+    return temp->dato;
+}
+\end{lstlisting}
+
+\subsection{Ricerca del massimo}
+Si continua iterativamente a percorrere il sottoalbero destro. Nel caso peggiore ha complessità $O(h)$.
+\begin{lstlisting}[title={Ricerca del massimo in un ABR}]
+Tdato massimo(BST tree){
+    BST temp = tree;
+    while (temp->dx != NULL){
+        temp = temp->dx;
+    }
+    return temp->dato;
+}
+\end{lstlisting}
+
+\subsection{Ricerca del successore e predecessore}
+Per implementare i seguenti algoritmi, nell'implementazione dell'ABR si necessita del riferimento ai genitori. Nel caso peggiore ha complessità $O(h)$.
+
+\subsection{Calcolo dell'altezza}
+L'algoritmo consiste nel percorrere tutti i percorsi, cercandone il più lungo.
+\begin{lstlisting}[title={Calcolo dell'altezza in un ABR}]
+int altezza(BST tree){
+    if (tree == NULL){
+       return -1; // dovuto alla definizione di altezza
+    } else {
+       return max(1+altezza(tree->sx),1+altezza(tree->dx));
+    }
+}
+\end{lstlisting}
+
+\subsection{Inserimento di un elemento}
+Nel caso peggiore ha una complessità $O(h)$.
+\begin{lstlisting}[title={Inserimento di un elemento in un ABR}]
+BST insert_node(BST tree, Tdato d){
+    if (tree == NULL){
+        return new Tnodo(d, NULL, NULL);
+    } else {
+        insert_ric(tree, d);
+        return tree;
+    }
+}
+
+// la funzione deve restituire un BST, in quanto non basta creare un nuovo nodo: bisogna anche collegarlo al precedente
+BST insert_ric(BST tree, Tdato d){
+    if (tree == NULL){
+        return new Tnodo(d, NULL, NULL);
+    } else {
+        if (d.isGreaterThan(tree->dato)){
+            tree->dx = insert_ric(tree->dx, d);
+        } else {
+            tree->sx = insert_ric(tree->sx, d);
+        }
+    }
+    return tree;
+}
+\end{lstlisting}
+
+\subsection{Conta numero di nodi}
+\begin{lstlisting}[title={Conta numero di nodi di un ABR}]
+int conta_nodi(BST tree){
+    if (tree == NULL){
+        return 0;
+    } else {
+        return 1 + conta_nodi(tree->sx) + conta_nodi(tree->dx);
+    }
+}
+\end{lstlisting}
+
+\subsection{Cancellazione di un elemento}
+Di seguito si descrive l'algoritmo per la \textit{cancellazione} di un elemento $z$:
+\begin{itemize}
+	\item caso 1: se $z$ non ha figlio $\textit{sx}$:
+	\begin{enumerate}
+		\item se $\text{dx != NULL}$, sostituisci $\textit{dx}$ a $z$.
+		\item se ha entrambi i figli $\textit{NULL}$, nessun problema
+	\end{enumerate}
+	\item caso 2: se $z$ ha solo figlio $\textit{sx}$, sostituisci $\textit{sx}$ a $z$.
+	\item caso 3: se $z$ ha due figli. Sia $y$ il successore di $z$ ($y$ ha necessariamente sottoalbero sinistro nullo e si trova nel sottalbero destro di $z$):
+	\begin{enumerate}
+		\item se $y$ è il diretto figlio destro di $z$: sostituisci $y$ (mantenendo il suo sottoalbero destro) a $z$.
+		\item se $y$ non è il diretto figlio destro di $z$: scambia $y$ con il diretto figlio destro di $z$; sostituisci $y$ (mantenendo il suo sottoalbero destro) a $z$.
+	\end{enumerate}	
+\end{itemize}
+
