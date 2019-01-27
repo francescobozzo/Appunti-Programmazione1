@@ -6,8 +6,8 @@ Lo \textbf{stack} (in italiano \textbf{pila}) è una struttura dati astratta di 
 Sia per definizione, che per problemi di ottimizzazione, lo stack prevede un solo punto di accesso per l'inserimento e la rimozione di un elemento: la testa.\\
 La pila può essere implementata con:
 \begin{itemize}[noitemsep, nolistsep]
-	\item \textit{array}: gestione statica della memoria; limite massimo di dimensione
-	\item \textit{liste}: gestione dinamica della memoria; occupazione variabile e non limitata
+	\item \textit{array}: gestione statica della memoria; limite massimo di dimensione.
+	\item \textit{liste}: gestione dinamica della memoria; occupazione variabile e non limitata.
 \end{itemize}
 
 \subsection{Funzioni}
@@ -32,3 +32,33 @@ Alcuni utilizzi dello stack riguardano:
 \end{itemize}
 
 \section{Code}
+\subsection{Definizione}
+La \textbf{coda} (in inglese \textbf{queue}) è una struttura dati astratta di tipo \textbf{FIFO} (\textit{First In First Out}).\\
+Sia per definizione, che per ottimizzare sia l'estrazione che l'inserimento, la queue prevede 2 punti di accesso:
+\begin{itemize}[noitemsep, nolistsep]
+	\item \textit{front} (in italiano \textit{testa}) per l'estrazione.
+	\item \textit{rear} (in italiano \textit{coda}) per l'inserimento.
+\end{itemize}
+
+\subsection{Implementazione}
+La coda può essere implementata attraverso:
+\begin{itemize}[noitemsep]
+	\item liste concatenate.
+	\item liste circolari.
+\end{itemize}
+\begin{lstlisting}[title={Implementazione di una coda attraverso liste concatenate}]
+typedef struct Queue {
+    Tnodo *head;
+    Tnodo *tail;
+} Queue;
+\end{lstlisting}
+
+\subsection{Funzioni}
+Le principali funzioni che una queue deve fornire sono:
+\begin{itemize}[noitemsep]
+	\item \textit{enqueue()}: inserisce un elemento nel rear con complessità $O(1)$.
+	\item \textit{dequeue()}: estrae un elemento dal front con complessità $O(1)$.
+	\item \textit{queueIsEmpty()}: verifica se la coda è vuota.
+	\item \textit{queueIsFull()}: verifica se la coda è piena (se implementata con liste circolari).
+	\item \textit{front()}: restituisce l'elemento in front.
+\end{itemize}
