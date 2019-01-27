@@ -1,7 +1,7 @@
 \chapter{Vettori e matrici}
-
+\section{Il concetto di array}
 Il vettore, chiamato più comunemente \textbf{array}, è il più semplice esempio di dato strutturato, esso consiste in una sequenza di celle consecutive ed omogenee, ovvero una sorta di contenitore di tante variabili dello stesso tipo a cui è possibile accedere tramite il nome del vettore e l’indice della variabile racchiuso tra parentesi quadre.\\
-Di per se l'array nel linguaggio C non è effettivamente un tipo di dato, esso è un costruttore di tipo che permette di creare un tipo di dato i cui elementi formano una sequenza come descritto poco fa. \\
+Di per se l'array nel linguaggio C non è effettivamente un tipo di dato, esso è un costruttore di tipo che permette di creare il tipo di dato appena descritto. \\
 Un array si crea ponendo l'identificatore del tipo di elemnti che conterrà, il nome dell'array e la dimensione dello stesso tra parentesi quadre nel modo seguente:
 \begin{lstlisting}[title={Implementazione di un array}]
 //esempio con array con 3 interi
@@ -13,21 +13,26 @@ char vettore_di_caratteri[6];
 //esempio con array di 3 array di 2 interi
 int vett[3][2];		//matrice 3*2
 \end{lstlisting}
+Si può usare come indice qualsiasi dato di tipo int e char.
 Si possono creare array contenenti qualsiasi tipo di dato, sia esso \textit{built-in} o \textit{user-defined}, semplice o strutturato, come si è appena visto nell'esempio si possono creare anche array di array (detti comunemente array bidimensionali o matrici) e non c'è limte al numero di dimensioni che si possono sfruttare. \\
-Tuttavia anche gli array hanno dei difetti, la principale limitazione sta nel fatto che la dimensione di un array non può cambiare durante l'esecuzione del programma; questo implica che nel caso non si conoscano a tempo di programmazione le dimensioni di un input da memorizzare in un array si dovrà necessariamente sovrastimare le dimensioni dell'array per evitare il rischio di \textbf{overflow}, con conseguente spreco memoria.\\ 
-Questa complicazione è dovuta alla complessità di realizzazione del compilatore di un linguaggio: per farla breve se la macchina astratta (di un determinato linguaggio) conosce la quantità di memoria necessaria per un programma prima della sua esecuzione 
-potrà operare in maniera molto più efficiente riservandosi subito tutta la memoria che le servirà; per questo motivo nella maggior parte dei linguaggi più comuni la possibilità di allocare memoria a tempo di esecuzione è permessa solo in casi speciali.\\
+\section{Caratteristiche tecniche}
 Gli elementi singoli di un array vengono trattati dal C come vere e proprie variabili (del tipo definito nella dichiarazione dell'array) e come queste possono essere coinvolte in tutte le operazioni riguardanti il loro tipo. L'array invece non può essere coinvolto globalmente in operazioni nè di assegnamento nè di confronto. Il metodo più comune per agire sull'array intero spesso prevede l'utilizzo di cicli for in cui l'iteratore fa anche da indice dell'array, come nell'esempio riportato qui sotto.
 \begin{lstlisting}[title={Implementazione di un array}]
 //si vuole inizializzare il seguente array di interi con una sequenza di 30
 int voti[10];
 int i;
 for(i=0; i<10; i++){
-	voti[i]=30;
+voti[i]=30;
 }
 \end{lstlisting}
 
+\section{Stringhe}
+Gli array vengono utilizzati anche per memorizzare stringe, precisamente queste altro non sono che array di elementi di tipo char terminanti con il carattere "$\backslash0$" . Le stringhe, essendo usate molto spesso, hanno una serie di comandi che ne semplificano il trattamento, come ad esempio il fatto che si possa stampare una stringa senza un ciclo che itera per tutto l'array (utilizzando l'identificatore \%s nella printf). Oltre a questo esiste una libreria standard interamente dedicata (<string.h>) che comprende comandi utilissimi quali \textbf{strcpy()} e \textbf{strlen()} il cui funzionamento è illustrato nel capitolo dedicato.
 
+\section{Nota teorica}
+Osservando da vicino questa struttura si nota che la principale limitazione sta nel fatto che la dimensione di un array non può cambiare durante l'esecuzione del programma; questo implica che nel caso non si conoscano a tempo di programmazione le dimensioni di un input da memorizzare si dovrà necessariamente sovrastimare le dimensioni dell'array per evitare il rischio di \textbf{overflow}, con conseguente spreco memoria.\\ 
+Tale complicazione è dovuta alla complessità di realizzazione del compilatore di un linguaggio: per farla breve se la macchina astratta (di un determinato linguaggio) conosce la quantità di memoria necessaria per un programma prima della sua esecuzione 
+potrà operare in maniera molto più efficiente riservando subito tutta la memoria che le sarà necessaria, evitando così di dover cercare memoria libera mentre fa girare il programma; per questo motivo nella maggior parte dei linguaggi più comuni la possibilità di allocare memoria a tempo di esecuzione è permessa solo in casi speciali (in C tutti i casi in cui si utilizza \textbf{malloc} per l'allocazione dinamica della mamoria).\\
 
+\section{Punatori e array}
 
-SCRIVI COSA PUò ESSERE USATO COME INDICE
