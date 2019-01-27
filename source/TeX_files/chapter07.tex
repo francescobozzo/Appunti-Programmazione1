@@ -1,1 +1,104 @@
 \chapter{Liste circolari}
+Il concetto di \textbf{lista circolare} è del tutto analogo a quello di una lista semplicemente o doppiamente concatenata: l'unica differenza è data dal fatto che l'ultimo elemento della lista è legato al primo. Dunque, bisogna porre attenzione a come scorrere la lista per evitare di incorrere in loop infiniti.
+
+\section{Implementazione della struttura}
+Principalmente si possono distinguere due implementazioni per la lista circolare:
+\begin{itemize}[noitemsep, nolistsep]
+	\item attraverso liste semplicemente o doppiamente concatenate.
+	\item attraverso un vettore.
+\end{itemize}
+\begin{lstlisting}[title={Implementazione di una lista circolare in C++}]
+typedef struct ListaCircolare{
+    // campi
+    Tdato v[MAX];
+    unsigned int n;     // numero di elementi nella lista
+    unsigned int testa; // indice dell'elemento in testa
+    unsigned int coda;  // indice dell'elemento successivo alla coda
+
+    // costruttore
+    ListaCircolare(){
+        n = testa = coda = 0;
+    }
+    
+    // metodi
+    ...
+} ListaCircolare;
+\end{lstlisting}
+
+\section{Ricerca di un elemento}
+\begin{lstlisting}[title={Metodo per la ricerca di un elemento in una lista circolare}]
+bool contains(Tdato d){
+    int j;
+    for (j=0; j<n; j++){
+        if (v[(testa+j) % MAX] == d){
+            return true;
+        }
+    }
+    return false;
+}
+\end{lstlisting}
+
+\section{Inserimento di un elemento}
+\begin{lstlisting}[title={Metodo per l'inserimento in testa in una lista circolare}]
+void insertFirst(Tdato d){
+    if (!isFull()){
+        testa = (testa-1) % MAX;
+        if (testa < 0){
+            testa += MAX;
+        }
+        v[testa] = d;
+        n++;
+    }
+}
+\end{lstlisting}
+\begin{lstlisting}[title={Metodo per l'inserimento in coda in una lista circolare}]
+void insertLast(Tdato d){
+    if (!isFull()){
+        v[coda] = d;
+        coda = (coda+1) % MAX;
+        n++;
+    }
+}
+\end{lstlisting}
+
+\section{Rimozione di un elemento}
+\begin{lstlisting}[title={Metodo per la rimozione della testa da una lista circolare}]
+void removeFirst(){
+    if (!isEmpty()){
+        testa = (testa+1) % MAX;
+        n--;
+    }
+}
+\end{lstlisting}
+\begin{lstlisting}[title={Metodo per la rimozione della coda da una lista circolare}]
+void removeLast(){
+    if (!isEmpty()){
+        coda = (coda-1) % MAX;
+        if (coda < 0){
+            coda += MAX;
+        }
+        n--;
+    }
+}
+\end{lstlisting}
+
+\section{Calcolare la lunghezza della lista}
+Si può notare com'è immediato restituire la lunghezza di una lista circolare:
+\begin{lstlisting}[title={Metodo per restituire la lunghezza di una lista circolare}]
+int length(){
+    return n;
+}
+\end{lstlisting}
+
+\section{Controllo lista piena/vuota}
+In modo analogo, anche qui il campo $n$ (contenente il numero di elementi) torna utile:
+\begin{lstlisting}[title={Metodo per controllare se la lista circolare è vuota}]
+bool isEmpty(){
+    return n == 0;
+}
+\end{lstlisting}
+\begin{lstlisting}[title={Metodo per controllare se la lista circolare è piena}]
+bool isFull(){
+    return n == MAX;
+}
+\end{lstlisting}
