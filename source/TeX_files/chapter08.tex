@@ -1,1 +1,34 @@
 \chapter{Stack e code}
+
+\section{Stack}
+\subsection{Definzione e implementazione}
+Lo \textbf{stack} (in italiano \textbf{pila}) è una struttura dati astratta di tipo \textbf{LIFO} (\textit{Last In First Out}).\\
+Sia per definizione, che per problemi di ottimizzazione, lo stack prevede un solo punto di accesso per l'inserimento e la rimozione di un elemento: la testa.\\
+La pila può essere implementata con:
+\begin{itemize}[noitemsep, nolistsep]
+	\item \textit{array}: gestione statica della memoria; limite massimo di dimensione
+	\item \textit{liste}: gestione dinamica della memoria; occupazione variabile e non limitata
+\end{itemize}
+
+\subsection{Funzioni}
+Le principali funzioni che uno stack deve fornire sono:
+\begin{itemize}[noitemsep]
+	\item \textit{init()}: inizializza la struttura.
+	\item \textit{push()}: inserisce in elemento in testa con complessità $O(1)$.
+	\item \textit{pop()}: elimina un elemento dalla testa con complessità $O(1)$.
+	\item \textit{top()}: restituisce l'elemento in testa.
+	\item \textit{isEmpty()}: verifica se lo stack è vuoto.
+	\item \textit{isFull()}: verifica se lo stack è pieno.
+	\item \textit{remove()}: rimozione di un elemento (utilizzando un secondo stack).
+\end{itemize}
+
+\subsection{Applicazioni}
+Alcuni utilizzi dello stack riguardano:
+\begin{itemize}[noitemsep]
+	\item trasformazione da espressioni in notazione infissa a postfissa.
+	\item valutazione di espressioni in notazione postfissa.
+	\item implementazione iterativa di algoritmi riguardo gli alberi binari di ricerca.
+	\item struttura degli ambienti di chiamata delle funzioni in runtime.
+\end{itemize}
+
+\section{Code}
