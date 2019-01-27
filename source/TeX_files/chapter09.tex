@@ -1,1 +1,40 @@
 \chapter{Allocazione dinamica della memoria}
+\section{Heap vs stack}
+Il linguaggio C permette al programmatore di utilizzare dei meccanismi di allocazione e deallocazione dinamica della memoria per gestire situazioni in cui un’allocazione statica sarebbe svantaggiosa. Un semplice esempio riguarda quei casi in cui non si è a conoscenza, al tempo della compilazione, delle dimensioni con cui si svilupperanno certe strutture dati durante l'esecuzione.\\
+A differenza delle \textbf{variabili automatiche} che vengono memorizzate nello \textit{stack}, le variabili allocate dinamicamente si trovano nell'\textbf{heap}.\\
+Naturalmente da grandi poteri derivano grandi responsabilità: ogni istruzione di allocazione deve essere accompagnata da una successiva istruzione di deallocazione. Nel caso contrario si possono riscontrare errori molto subdoli e nascosti come la produzione di \textit{garbage} e di \textit{dangling references}.
+
+\section{Allocazione e deallocazione...}
+Nel caso di fallimento di un'operazione di allocazione viene restituito il valore \textit{NULL}.\\
+\`{E} possibile utilizzare le istruzioni di deallocazione ad un puntatore se e solo se esso contiene un indirizzo sull'heap assegnato dinamicamente.
+\subsection{... in C}
+Nel linguaggio C è necessario includere la libreria \textit{stdlib.h} per utilizzare le istruzioni per allocazione e deallocazione:
+\begin{lstlisting}[title={Allocazione e deallocazione dinamica di una variabile in C}]
+tipo* ptr_var = (tipo*) malloc(sizeof(tipo));
+free(ptr_var);
+\end{lstlisting}
+\begin{lstlisting}[title={Allocazione e deallocazione dinamica di un vettore in C}]
+tipo* ptr_arr = (tipo*) malloc(sizeof(tipo)*len_array);
+free(ptr_arr);
+\end{lstlisting}
+
+\subsection{... in C++}
+Nel linguaggio C++ le istruzioni per allocazione e deallocazione sono:
+\begin{lstlisting}[title={Allocazione e deallocazione dinamica di una variabile in C++}]
+tipo* ptr_var = new tipo;
+delete ptr_var;
+\end{lstlisting}
+\begin{lstlisting}[title={Allocazione e deallocazione dinamica di un vettore in C++}]
+tipo* ptr_arr = new tipo[];
+delete [] ptr_arr;
+\end{lstlisting}
+
+\section{Tre sezioni di memoria}
+Per ricapitolare, esistono principalmente tre sezioni di memoria in un programma C/C++:
+\begin{itemize}
+	\item \textit{Memoria automatica}: contiene le variabili che vengono allocate/deallocate automaticamente nello stack quando viene invocata/termina la funzione in cui sono definite.
+	\item \textit{Memoria dinamica}: viene allocata a run-time nello heap dagli operatori presentati precedentemente.
+	\item \textit{Memoria statica}: contiene le variabili statiche e globali.
+\end{itemize}
+
+
