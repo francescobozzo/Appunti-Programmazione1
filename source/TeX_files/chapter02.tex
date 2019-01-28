@@ -27,9 +27,36 @@ voti[i]=30;
 \end{lstlisting}
 
 \section{Stringhe}
-Gli array vengono utilizzati anche per memorizzare stringe, i metodi di implementazione di qusto tipo di dato ed i suoi utilizzi saranno specificati in seguito.% precisamente queste altro non sono che array di elementi di tipo char terminanti con il carattere "$\backslash0$" . Le stringhe, essendo usate molto spesso, hanno una serie di comandi che ne semplificano il trattamento, come ad esempio il fatto che si possa stampare una stringa senza un ciclo che itera per tutto l'array (utilizzando l'identificatore \%s nella printf). Oltre a questo esiste una libreria standard interamente dedicata (<string.h>) che comprende comandi utilissimi quali \textbf{strcpy()} e \textbf{strlen()} il cui funzionamento è illustrato nel capitolo dedicato. %
+Gli array vengono utilizzati anche per memorizzare stringe, i metodi di implementazione di qusto tipo di dato ed i suoi utilizzi saranno specificati in seguito.
 \section{Punatori e array}
- 
+Esiste uno stretto legame tra puntatori ed array poichè se dichiariamo un array a[n] la scrittura a[i] e quivale a *(a+i), questo significa che l'identificatore a in realtà è un puntatore alla prima della sequenza di n celle dell'array. Si osservi il seguente esempio:
+\begin{lstlisting}[title={Utilizzo di puntatori come array}]
+int vett[5];
+int *p;
+//le due righe seguenti sono equivalenti
+p=&vett[0]; 
+p=vett;
+//per modificare la cella vett[2] si puo' agire cosi'
+*(p+2)=7;    // == vett[2]=7
+//quindi queste due scritture sono equivalenti
+*(p+i) == vett[i]    //TRUE
+//array dato in pasto ad una funzione
+funz_random(vett) == funz_random(&vett[0])    //TRUE
+//due dichiarazioni di funzione equivalenti
+funzione_2(int v[]) == funzione_2(int *v)    //TRUE
+\end{lstlisting}
+Nelle ultime due righe abbiamo visto come vengono passati gli array alle funzioni, ovvero come indirizzo del loro primo elemento.\\
+Tuttavia va ricordato che puntatori e vettori hanno caratteristiche molto diverse pichè i primi sono variabili mentre i secondi no e quindi non possono essere sottoposti alle stesse operazioni (in particolare assegnamento ed incremento) come si può osservare in seguito:
+\begin{lstlisting}[title={Differenze puntatori/array}]
+int vett[5];
+int *p;
+//operazioni valide
+p=vett;
+p++;
+//operazioni NON valide
+vett=p;
+vett++;
+\end{lstlisting}
  
 \section{Nota teorica}
 Osservando da vicino questa struttura si nota che la principale limitazione sta nel fatto che la dimensione di un array non può cambiare durante l'esecuzione del programma; questo implica che nel caso non si conoscano a tempo di programmazione le dimensioni di un input da memorizzare si dovrà necessariamente sovrastimare le dimensioni dell'array per evitare il rischio di \textbf{overflow}, con conseguente spreco memoria.\\ 
