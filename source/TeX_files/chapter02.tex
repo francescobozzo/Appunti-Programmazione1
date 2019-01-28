@@ -27,12 +27,14 @@ voti[i]=30;
 \end{lstlisting}
 
 \section{Stringhe}
-Gli array vengono utilizzati anche per memorizzare stringe, precisamente queste altro non sono che array di elementi di tipo char terminanti con il carattere "$\backslash0$" . Le stringhe, essendo usate molto spesso, hanno una serie di comandi che ne semplificano il trattamento, come ad esempio il fatto che si possa stampare una stringa senza un ciclo che itera per tutto l'array (utilizzando l'identificatore \%s nella printf). Oltre a questo esiste una libreria standard interamente dedicata (<string.h>) che comprende comandi utilissimi quali \textbf{strcpy()} e \textbf{strlen()} il cui funzionamento è illustrato nel capitolo dedicato.
-
+Gli array vengono utilizzati anche per memorizzare stringe, i metodi di implementazione di qusto tipo di dato ed i suoi utilizzi saranno specificati in seguito.% precisamente queste altro non sono che array di elementi di tipo char terminanti con il carattere "$\backslash0$" . Le stringhe, essendo usate molto spesso, hanno una serie di comandi che ne semplificano il trattamento, come ad esempio il fatto che si possa stampare una stringa senza un ciclo che itera per tutto l'array (utilizzando l'identificatore \%s nella printf). Oltre a questo esiste una libreria standard interamente dedicata (<string.h>) che comprende comandi utilissimi quali \textbf{strcpy()} e \textbf{strlen()} il cui funzionamento è illustrato nel capitolo dedicato. %
+\section{Punatori e array}
+ 
+ 
 \section{Nota teorica}
 Osservando da vicino questa struttura si nota che la principale limitazione sta nel fatto che la dimensione di un array non può cambiare durante l'esecuzione del programma; questo implica che nel caso non si conoscano a tempo di programmazione le dimensioni di un input da memorizzare si dovrà necessariamente sovrastimare le dimensioni dell'array per evitare il rischio di \textbf{overflow}, con conseguente spreco memoria.\\ 
 Tale complicazione è dovuta alla complessità di realizzazione del compilatore di un linguaggio: per farla breve se la macchina astratta (di un determinato linguaggio) conosce la quantità di memoria necessaria per un programma prima della sua esecuzione 
 potrà operare in maniera molto più efficiente riservando subito tutta la memoria che le sarà necessaria, evitando così di dover cercare memoria libera mentre fa girare il programma; per questo motivo nella maggior parte dei linguaggi più comuni la possibilità di allocare memoria a tempo di esecuzione è permessa solo in casi speciali (in C tutti i casi in cui si utilizza \textbf{malloc} per l'allocazione dinamica della mamoria).\\
 
-\section{Punatori e array}
+
 
