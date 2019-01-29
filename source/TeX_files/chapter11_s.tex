@@ -1,5 +1,55 @@
 \chapter{Gestione file}
 \section{Il concetto di file}
-Il C gestisce le interazioni con le varie periferiche fisiche rappresentandole come file su cui agisce attraverso un meccanismo chiamato stream, che funziona come un'interfaccia consistente, che cioè permette di interagire con tutti i tipi di periferiche allo stesso modo. Un file viene associato ad uno stream tramite un operazione di open, che da avvio alle comunicazioni tra software e periferica.\\ Mentre tute le periferiche non lavorano alla stessa maniera i file sì, per questo è comodo intermediare le comunicazioni tramite i file, il lingaggio C ha almeno 3 file costantemente aperti: stdin, stdout e strderr.\\
+Il C gestisce le interazioni con le varie periferiche fisiche rappresentandole come \textbf{file} su cui agisce attraverso un meccanismo chiamato stream, che funziona come un'interfaccia consistente, che cioè permette di interagire con tutti i tipi di periferiche allo stesso modo. Un file viene associato ad uno \textbf{stream} (flusso) tramite un operazione di open, che da avvio alle comunicazioni tra software e periferica.\\ Mentre tute le periferiche non lavorano alla stessa maniera i file sì, per questo è comodo intermediare le comunicazioni tramite i file così da renderle standard; il lingaggio C ha almeno 3 file costantemente aperti: stdin (file di input), stdout (file di output) e stderr (file di registrazione degli errori).\\
 \section{Come implementare un file}
+Nella libreria standard del C esistono comandi diversi per operare su file di testo e file binari, la funzione di apertura del flusso è però uguale in entrambi i casi e si chiama \textbf{fopen()}, dove all'interno delle parentesi va scritto ("nomedelfile.estensione", "metododiapertura"); i possibili metodi di apertura sono:
+\begin{itemize}
+	\item \textbf{"w"}: \textit{write} apre il flusso in modalità scrittura su file di testo
+	\item \textbf{"r"}: \textit{read} apre il flusso in modalità lettura da file di testo
+	\item \textbf{"a"}: \textit{append}  apre il flusso in modalità "aggiunta" a file di testo\footnote[1]{La modalità aggiunta è necessaria poichè ogni volta che un file viene aperto con comando "w" o "wb" il suo contenuto precedente viene eliminato}
+	\item \textbf{"wb"}: comando "w" per file binari
+	\item \textbf{"rb"}: comando "r" per file binari
+	\item \textbf{"ab"}: comando "a" per file binari
+\end{itemize}
+Esistono anche comandi avanzati ("w+", "r+", "a+") che permettono di modificare il cursore del file e quindi decidere in che posizione agire.\\
+La funzione \textbf{fopen()} inoltre restituisce l'indirizzo della struttura file associata al flusso che crea,mentre restituisce NULL se c'è stato qualche errore in fase di apertura del flusso.
+\section{Operazioni di lettura e scrittura su file}
+In questa sezione vengono presentati i metodi di lettura e scrittura su file, con esempi di file binari e di testo.
+\begin{lstlisting}[title={File di testo (.txt)}]
+//creazione del puntatore alla struttura file
+FILE *f_txt;
+int x=7;
+char testo[20];
+//apertura file in modalita' scrittura con controllo sull'apertura
+if((f_txt=fopen("nomefile.txt", "w"))==NULL){
+	printf("errorre apertura file fase w");
+}
+//scrittura sul file
+fprintf(f_txt, "numero_piccioni: %d"/*(tipo della variabile da scrivere)*/, x);
+fprintf(f_txt, "si puo' scrivere anche solo testo", NULL);
+//chiusura del file (e dello stream)
+fclose(f_txt);
 
+//apertura file in modalita' lettura 
+if((f_txt=fopen("nomefile.txt", "r"))==NULL){
+printf("errorre apertura file fase r");
+}
+//lettura
+fscanf(f_txt, "%s: %d"/*tipi scritti esattamente come sono scritti nel file*/, &testo, &x);
+//chiusura stream
+fclose(f_txt);
+
+//apertura file modalita' append
+if((f_txt=fopen("nomefile.txt", "a"))==NULL){
+printf("errorre apertura file fase a");
+}
+//append
+fprintf(f_txt, "testo aggiunto\n", NULL);
+//chiusura
+fclose(f_txt);
+\end{lstlisting}
+\begin{lstlisting}[title={File binari (.bin)}]
+
+
+
+\end{lstlisting}
