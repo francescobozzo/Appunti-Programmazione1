@@ -49,7 +49,43 @@ fprintf(f_txt, "testo aggiunto\n", NULL);
 fclose(f_txt);
 \end{lstlisting}
 \begin{lstlisting}[title={File binari (.bin)}]
+//creazione del puntatore alla struttura file
+FILE *f_bin;
+int x=12;
+char testo[20];
+//apertura file in modalita' scrittura bin con controllo sull'apertura 
+if((f_txt=fopen("nomefile.bin", "wb"))==NULL){ 
+printf("errorre apertura file fase wb");
+}
+/*se si sta programmando su windows per poter controllare il file si deve comunque dichiararlo come .txt*/
+//scrittura sul file bin
+fwrite(&x, sizeof(int), 1, f_bin);
+/*i dati inseriti sono: indirizzo della variabile da copiare, dimensione, numero di dati di quel tipo che vengono copiati, indirizzo del file*/
+//scrittura di una stuttura su file bin
+typedef struct Tdato {
+	int a,b,c;
+}
+Tdato d, d2; 
+d.a=d.b=d.c=26;
+fwrite(&d, sizeof(Tdato), 1, f_bin);
+//chiusura del file (e dello stream)
+fclose(f_bin);
 
+//apertura file in modalita' lettura bin
+if((f_txt=fopen("nomefile.bin", "rb"))==NULL){
+printf("errorre apertura file fase rb");
+}
+//lettura bin
+fread(&d2, sizeof(Tdato), 1, f_bin);
+//chiusura stream
+fclose(f_bin);
 
-
+//apertura file modalita' append bin
+if((f_txt=fopen("nomefile.txt", "ab"))==NULL){
+printf("errorre apertura file fase ab");
+}
+fwrite(&d2, sizeof(Tdato), 1, f_bin);
+//chiusura
+fclose(f_bin);
 \end{lstlisting}
+Un aspetto molto interessante da notare è che se si apre il file in modalità binaria si può copiare interamente un qualsiasi tipo di dato (\textit{built-in} o \textit{user-defined}) da file a variabile o viceversa con un solo comando, cosa che non è possibile se si apre lo stream con un file in modalità testo.
