@@ -1,0 +1,72 @@
+\chapter{Vettori e matrici}
+\section{Il concetto di array}
+Il vettore, chiamato più comunemente \textbf{array}, è il più semplice esempio di dato strutturato, esso consiste in una sequenza di celle consecutive ed omogenee, ovvero una sorta di contenitore di tante variabili dello stesso tipo a cui è possibile accedere tramite il nome del vettore e l’indice della variabile racchiuso tra parentesi quadre.\\
+Di per sé l'array nel linguaggio C non è effettivamente un tipo di dato, esso è un costruttore di tipo che permette di creare il tipo di dato appena descritto. \\
+Un array si crea ponendo l'identificatore del tipo di elemnti che conterrà, il nome dell'array e la dimensione dello stesso tra parentesi quadre nel modo seguente:
+\begin{lstlisting}[title={Implementazione di un array}]
+//esempio con array con 3 interi
+int vettore[3];
+
+//esempio con array di 6 caratteri
+char vettore_di_caratteri[6];
+
+//esempio con array di 3 array di 2 interi
+int vett[3][2];		//matrice 3*2
+\end{lstlisting}
+Si può usare come indice qualsiasi dato di tipo int e char.
+Si possono creare array contenenti qualsiasi tipo di dato, sia esso \textit{built-in} o \textit{user-defined}, semplice o strutturato. Come si è appena visto nell'esempio, si possono creare anche array di array (detti comunemente array bidimensionali o matrici) e non c'è limite al numero di dimensioni che si possono sfruttare.
+
+\section{Caratteristiche tecniche}
+I singoli elementi di un array vengono trattati dal C come vere e proprie variabili (del tipo definito nella dichiarazione dell'array): essi dunque possono essere coinvolti in tutte le operazioni riguardanti il loro tipo. L'array invece non può essere coinvolto globalmente in operazioni nè di assegnamento nè di confronto. Il metodo più comune per agire sull'array intero spesso prevede l'utilizzo di cicli: in particolare il ciclo \textit{for} in cui il contatore viene utilizzato per scorrere l'array, come nell'esempio riportato qui sotto.
+\begin{lstlisting}[title={Implementazione di un array}]
+//si vuole inizializzare il seguente array di interi con una sequenza di 30
+int voti[10];
+int i;
+for(i=0; i<10; i++){
+    voti[i]=30;
+}
+\end{lstlisting}
+
+\section{Stringhe}
+Gli array vengono utilizzati anche per memorizzare stringe, i metodi di implementazione di qusto tipo di dato ed i suoi utilizzi saranno specificati in seguito.
+
+\section{Punatori e array}
+Esiste un legame stretto tra puntatori ed array: infatti, dichiarando un array \colorbox{light-gray}{a[n]}, è possibile accedere al suo \textit{i}-esimo elemento sia attraverso la scrittura \colorbox{light-gray}{a[i]} che \colorbox{light-gray}{*(a+i)}. Questo significa che l'identificatore \colorbox{light-gray}{a} in realtà è un puntatore \textit{read-only} alla prima cella dell'array. Si osservi il seguente esempio:
+\begin{lstlisting}[title={Utilizzo di puntatori come array}]
+int vett[5];
+int *p;
+// ottenimento indirizzo del vettore
+p=&vett[0]; // analogo a p=vett;
+
+// vett = &p; ERRORE: l'identificatore vett e' read-only
+
+// accesso ad un elemento del vettore
+*(p+2)=7;    // analogo a vett[2]=7
+
+// chiamata a funzione
+int result = funz_random(vett); // analogo a funz_random(&vett[0])
+
+// definizione di funzione
+funzione_2(int v[]); // analogo a funzione_2(int *v)
+\end{lstlisting}
+
+Nelle ultime due righe abbiamo visto per passare gli array alle funzioni si utilizza l'indirizzo del loro primo elemento.\\
+Tuttavia va ricordato che puntatori e vettori hanno caratteristiche molto diverse: i primi sono un tipo di dato semplice, mentre i secondi sono un tipo di dato strutturato. Come si può osservare in seguito dunque non possono essere sottoposti alle stesse operazioni (in particolare assegnamento ed incremento):
+\begin{lstlisting}[title={Differenze puntatori/array}]
+int vett[5];
+int *p;
+
+// operazioni valide
+p=vett;
+p++;
+
+// operazioni NON valide
+// vett=p;
+// vett++;
+\end{lstlisting}
+
+\section{Nota teorica}
+Osservando da vicino la struttura dell'array, si nota che la principale limitazione consiste nel fatto che la dimensione di un array non può variare durante l'esecuzione del programma; questo implica che nel caso non si conoscano a tempo di compilazione le dimensioni di un input da memorizzare, si dovrà necessariamente sovrastimare le dimensioni dell'array per evitare il rischio di \textbf{overflow}, con conseguente spreco memoria.\\ 
+Tale complicazione è dovuta alla complessità di realizzazione del compilatore di un linguaggio: se la macchina astratta (di un determinato linguaggio) conosce la quantità di memoria da allocare per un programma prima della sua esecuzione, 
+potrà operare in maniera molto più efficiente, riservando a priori la memoria necessaria. In questo modo si evita la ricerca di  eventuali porzioni di memoria libera durante l'esecuzione del programma.\\
+Questi concetti verranno ripresi e approfonditi nel capitolo \ref{memoriaDin}.
