@@ -18,6 +18,18 @@ Ecco una breve lista degli elemnti basilari di questa scienza:
 	Data la complessità di alcuni programmi si sono sviluppati linguaggi intermedi (di alto livello) più vicini al linguaggio naturale che facilitano la scrittura dei programmi e che poi possono essere tradotti in linguaggi di basso livello, ovvero più vicini alla macchina (ed interpretabili da essa); esempi sono lo pseudocodice ed i diagrammi di flusso.
 \end{itemize}
 
-\section{}
+\section{Il computer}
+Al giorno d'oggi esistono molti tipi di computer con caratteristiche e scopi diversi tra loro ma nonostante questo si possono elencare i componenti più importanti di un calcolatore che sono presenti nella maggior parte di essi:
+	\begin{itemize}
+	\item\textbf{CPU}: è l’unità di elaborazione del calcolatore, essa carica istruzioni da eseguire dalla memoria centrale, interpreta le istruzioni ed infine le esegue ( e.s. calcolo numerico o trasferimento di informazioni da una memoria all’altra).
+	Il lavoro della CPU è scandito da impulsi generati da un orologio interno (\textit{clock}), più è elevata la frequenza degli impulsi del \textit{clock} più sono le istruzioni eseguite nell’unità di tempo; Al giorno d'oggi la velocità del \textit{clock} non si sposta molto da 3GHz per problemi relativi alla dissipazione del calore, tuttavia la velocità dei computer è andata comunque aumentando per via dell'introduzione di nuove architetture nella progettazione dei calcolatori (es.: computer multi-core).
+	\item\textbf{Memoria centrale (RAM)}: utilizzata per memorizzare dati e istruzioni; la \textit{Random Access Memory} è una memoria il cui tempo di accesso è indipendente dall’indirizzo del dato al quale si vuole accedere (al contrario dei nastri magnetici). Si tratta di una memoria volatile, cioè il contenuto viene perso quando cessa l’alimentazione del sistema.
+	\item\textbf{Bus di sistema}: interconnette tutti gli altri componenti, consentendo lo scambio di dati.
+	\item\textbf{Periferiche di I/O}: ne esistono vari tipi: memorie di massa, monitor, tastiere, schede di rete, sensori etc.; non sono componenti fondamentali del calcolatore  ma permettono che esso venga utilizzato per una quantità enorme di funzioni diverse.
+	\item\textbf{Memorie ROM}: sono un tipo particolare di memoria su cui non è consentita la lettura (\textit{Read Only Memory}) che vengono utilizzate per memorizzare i dati costanti in un calcolatore come i firmware (software di base per il calcolatore, come il \textbf{BIOS});
+\end{itemize}
 
+\section{La macchina di Von Neumann}
+L’hardware sulla maggior parte dei computer moderni è progettato secondo lo schema di Von Neumann che prevede esattamente le componenti indicate nell'elenco precedente; Il funzionamento di questa macchina schematicamente si può riassumere così:\\
+Le fasi di elaborazione si susseguono in modo sincrono rispetto all'orologio di sistema (\textit{clock}). Durante ogni intervallo di tempo l’unità di controllo (parte del processore) stabilisce la funzione da svolgere e l’intera macchina opera in maniera sequenziale (anche se le architetture più evolute prevedono esecuzione contempoarnea di più istruzioni). Tutte le varie componenti della macchina sono collegate tra loro (e alla \textbf{CPU}, il direttore d'orchestra) tramite il bus di sistema che in ogni istante è dedicato a collegare due unità, di cui una trasmette ed una riceve.
 
