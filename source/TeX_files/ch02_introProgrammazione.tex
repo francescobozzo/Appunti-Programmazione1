@@ -189,11 +189,128 @@ for (i=1; i<=10; i++){
 \end{theorem}
 Come abbiamo visto nelle precedenti sezioni, il C presenta tutte e tre le ipotesi, dunque il C è un linguaggio completo.
 
-\section{Funzioni}\label{funzioni}
+\section{Puntatori}\label{puntatori}
+Un puntatore è una variabile che contiene l’indirizzo di un’altra variabile (di un tipo specifico). Esso viene dichiarato utilizzando l’operatore di \textit{dereferenziazione} \colorbox{light-gray}{*}. 
+\begin{lstlisting}[title = {Dichiarazione generica di una variabile puntatore}]
+tipoDato *nomePuntatore; // puntatore a una variabile di tipo tipoDato
+\end{lstlisting}
 
+Un altro operatore utile con i puntatori è \colorbox{light-gray}{\&}, che, se posto a sinistra di una variabile, restituisce l’indirizzo della variabile stessa.
+\begin{lstlisting}[title = {Utilizzo dell'operatore \&}]
+int numero = 12;
+int *ptr = &numero; // ptr contiene l'indirizzo di numero
+\end{lstlisting}
+
+\`{E} possibile anche dichiarare puntatori a puntatori:
+\begin{lstlisting}[title = {Puntatori di puntatori}]
+int numero = 12;
+int *singlePtr = &numero; 
+int **doublePtr = &singlePtr; // doublePtr contiene l'indirizzo di singlePtr
+\end{lstlisting}
+
+\section{Funzioni}\label{funzioni}
+\subsection{Sottoprogrammi: funzioni e procedure}
+Le \textbf{funzioni} sono veri e propri sottoprogrammi che una volta inseriti nel codice possono essere riutilizzati più e più volte, senza creare ripetizioni nel codice. Ciò migliora il mantenimento e l'usabilità del codice.\\
+In C posso definire due tipi di sottoprogrammi: 
+\begin{itemize}
+	\item funzioni: restituiscono un valore al chiamante, analogamente alle funzioni matematiche (sia tipi di default che user-defined).
+	\item procedure: svolgono un compito per il chiamante ma non restituiscono un valore specifico (restituiscono \colorbox{light-gray}{void}).
+\end{itemize}
+\underline{Nota}: una funzione non può restituire un array (se necessario restituire un puntatore al primo elemento del vettore).\\
+Gli argomenti della funzione, elencati nella testata, vengono chiamati i \textbf{parametri formali} della funzione. I \textbf{parametri effettivi} sono invece quelli con i quali la funzione viene invocata.\\
+Per utilizzare una funzione in un programma si deve prima \textit{dichiararla}, ovvero scriverne un prototipo, il prototipo di una funzione viene posto nella parte dichiarativa globale per essere invocata a seguire nel programma. Oltre a questo la funzione deve essere \textit{definita} (ne deve essere descritto il procedimento).  
+\begin{lstlisting}[title={Dichiarazione di una funzione}]
+// dichiarazione
+<return type> functionName (<type arg1> arg1, <type arg2> arg2, ...);
+
+// definizione
+<return type> functionName (<type arg1> arg1, <type arg2> arg2, ...){
+    ...
+}
+\end{lstlisting}
+
+\subsection{L'ambiente di una funzione in memoria}
+Quando in C un programma richiama una funzione, esso si interrompe momentaneamente per permettere alla macchina di svolgere tale funzione (che è essenzialmente anch’essa un programma): spesso viene creata una specifica macchina dedicata alla funzione con una propria memoria d'ambiente, nettamente separata da quella del programma chiamante.\\
+Per gestire gli ambienti delle funzioni chiamate si sfrutta il meccanismo di \textit{gestione della memoria a pila} (\textit{stack}) con una struttura dati \textit{LIFO} (\textit{Last In First Out}).\\ L’invocazione di una funzione comporta l’allocazione di un nuovo ambiente in memoria sulla cima dello stack. Quando termina l’esecuzione del sottoprogramma si recupera il risultato e si rimuove l'ambiente dalla pila.
+
+\subsection{Passaggio dei parametri a funzioni}
+In C tutti i parametri passati alle funzioni vengono passati \textbf{per valore}, ossia ne viene effettuata una copia. Dunque, se viene modificato un argomento nel corpo di una funzione, la funzione chiamante non risentirà di questi cambiamenti.
+\begin{lstlisting}[title={Il passaggio per valore}]
+void cambiaValore(int a){
+    a = 6;
+}
+int main(){
+    int a = 5;
+    cambiaValore(a);
+    printf("%d", a); // stampa 5
+}
+\end{lstlisting}
+Al contrario, utilizzando un puntatore è possibile eseguire un passaggio \textbf{per riferimento}: se viene modificato un argomento nel corpo di una funzione, la funzione chiamante risentirà di questi cambiamenti.
+\begin{lstlisting}[title={Il passaggio per riferimento}]
+void cambiaValore(int* a){
+    *a = 6;
+}
+int main(){
+    int a = 5;
+    cambiaValore(&a);
+    printf("%d", a); // stampa 6
+}
+\end{lstlisting}
+
+\`{E} inoltre possibile, attraverso l'attributo \colorbox{light-gray}{const}, impedire la modifica della variabile puntata da puntatore.
+\begin{lstlisting}[title={Utilizzo dell'attributo const}]
+void cambiaValore(const int* a){
+    // non e' possibile modificare a
+}
+int main(){
+    int a = 5;
+    cambiaValore(&a);
+    printf("%d", a); // stampa 5
+}
+\end{lstlisting}
+
+Tuttavia gli array sono trattati in modo particolare quando vengono utilizzati come parametro effettivo: viene passato per valore l’indirizzo di base dell’array, cioè l’indirizzo del primo elemento. Inoltre, quando si dichiara una funzione che accetta un vettore come parametro formale, non è necessario indicarne la misura fra parentesi quadre. Al contrario, per matrici di dimensione superiore a 1, è necessario specificare la grandezza di ciascuna dimensione (fatta eccezione per l'ultima) fra parentesi graffe.
+\begin{lstlisting}[title={Dichiarazione di funzioni con vettori e matrici come parametri formali}]
+void funzione1(int vettore[]);
+void funzione2(int matrice[3][]);
+void funzione3(int matrice[3][4][2][]);
+\end{lstlisting}
+
+\underline{Nota}: In C vige il meccanismo della deroga (\textit{mascheramento}) fra i blocchi di codice: la dichiarazione di un elemento in un blocco maschera eventuali entità omonime esterne al blocco in considerazione. (Un blocco è una sezione di codice delimitata dalle parentesi graffe).
+
+\subsection{Funzioni ricorsive}
+Si definisce \textbf{ricorsiva} una funzione che richiama se stessa. Questo meccanismo viene sfruttato per trasformare problemi complessi in problemi elementari di immediata risoluzione.\\
+Una funzione ricorsiva è costituita principalmente da due parti:
+\begin{itemize}[noitemsep]
+	\item \textit{caso base}: soluzione del problema elementare.
+	\item \textit{caso induttivo}: divisone del problema complesso in problemi più semplici.
+\end{itemize}
+
+\begin{lstlisting}[title={Calcolo del fattoriale di un numero implementato ricorsivamente}]
+int fattoriale(int n) {
+    if (n < 0){
+        return -1;
+    }
+    if (n == 0){
+        return 1;
+    } else {
+        return n * fattoriale(n-1);
+    }
+}
+\end{lstlisting}
+Seppur sia un meccanismo molto potente, programmare per ricorsione non è sempre la scelta più efficiente: ad ogni chiamata di funzione infatti viene creato un nuovo ambiente nello stack. Con input di dimensioni ragionevoli ciò non si nota, ma scalando si possono incontrare facilemente problemi legati all'eccessiva occupazione di memoria.
+
+\subsection{Funzione per la generazione di numeri pseudocasuali}
+Con l'ausilio della funzione \colorbox{light-gray}{rand()} inclusa in \colorbox{light-gray}{stdlib.h}, è comodo costruire una funzione che genera numero pseudocasuali compresi fra un minimo e un massimo:
+\begin{lstlisting}[title={Funzione per la generazione di numeri pseudocasuali}]
+#include <stdlib.h>
+
+int generaNumeroCasuale(int min, int max){
+    return (rand() % (max-min+1) + min);
+}
+\end{lstlisting}
 
 \section{Enumerazioni}
 
 \section{Strutture}
 
-\section{Puntatori}\label{puntatori}
