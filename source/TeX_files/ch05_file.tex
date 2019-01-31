@@ -1,91 +1,158 @@
 \chapter{Gestione file}
 \section{Il concetto di file}
-Il C gestisce le interazioni con le varie periferiche fisiche rappresentandole come \textbf{file} su cui agisce attraverso un meccanismo chiamato stream, che funziona come un'interfaccia consistente, che cioè permette di interagire con tutti i tipi di periferiche allo stesso modo. Un file viene associato ad uno \textbf{stream} (flusso) tramite un operazione di open, che da avvio alle comunicazioni tra software e periferica.\\ Mentre tute le periferiche non lavorano alla stessa maniera i file sì, per questo è comodo intermediare le comunicazioni tramite i file così da renderle standard; il lingaggio C ha almeno 3 file costantemente aperti: stdin (file di input), stdout (file di output) e stderr (file di registrazione degli errori).\\
-\section{Come implementare un file}
-Nella libreria standard del C esistono comandi diversi per operare su file di testo e file binari, la funzione di apertura del flusso è però uguale in entrambi i casi e si chiama \textbf{fopen()}, dove all'interno delle parentesi va scritto ("nomedelfile.estensione", "metododiapertura"); i possibili metodi di apertura sono:
-\begin{itemize}
-	\item \textbf{"w"}: \textit{write} apre il flusso in modalità scrittura su file di testo
-	\item \textbf{"r"}: \textit{read} apre il flusso in modalità lettura da file di testo
-	\item \textbf{"a"}: \textit{append}  apre il flusso in modalità "aggiunta" a file di testo\footnote[1]{La modalità aggiunta è necessaria poichè ogni volta che un file viene aperto con comando "w" o "wb" il suo contenuto precedente viene eliminato}
-	\item \textbf{"wb"}: comando "w" per file binari
-	\item \textbf{"rb"}: comando "r" per file binari
-	\item \textbf{"ab"}: comando "a" per file binari
+Il C gestisce le interazioni con le varie periferiche fisiche rappresentandole come \textbf{file} su cui agisce attraverso un meccanismo chiamato stream. Esso funziona come un'interfaccia consistente, cioè permette di interagire con tutti i tipi di periferiche allo stesso modo. Un file viene associato ad uno \textbf{stream} (flusso) tramite un'operazione di \textit{open}, (avvio delle comunicazioni tra software e periferica).\\
+Il lingaggio C ha almeno 3 file costantemente aperti: \colorbox{light-gray}{stdin} (file di input), \colorbox{light-gray}{stdout} (file di output) e \colorbox{light-gray}{stderr} (file di registrazione degli errori).
+
+\section{Come apriree chiudere un file}
+Nella libreria standard del C esistono diversi strumenti per operare su file di testo e file binari. In entrambi i casi la funzione di apertura del flusso è però la medesima:
+\begin{lstlisting}[title={Interfaccia funzione open()}]
+FILE *file = fopen(<nome del file>, <tipo di apertura>);
+\end{lstlisting}
+La funzione \colorbox{light-gray}{fopen()} inoltre restituisce l'indirizzo della struttura file associata al flusso creato; se al contrario incontra qualche errore, restituisce \textit{NULL}.
+Di seguito sono elencate le diverse modalità di apertura disponibili:
+\begin{itemize}[noitemsep]
+	\item \colorbox{light-gray}{"w"}: scrittura su file di testo.
+	\item \colorbox{light-gray}{"r"}: lettura da file di testo.
+	\item \colorbox{light-gray}{"a"}: aggiunta a file di testo.\footnote[1]{La modalità aggiunta è necessaria poichè ogni volta che un file viene aperto con comando "w" o "wb" il suo contenuto precedente viene eliminato}
+	\item \colorbox{light-gray}{"wb"}: scrittura su file binari.
+	\item \colorbox{light-gray}{"rb"}: lettura da file binari.
+	\item \colorbox{light-gray}{"ab"}: aggiunta a file binari.
 \end{itemize}
-Esistono anche comandi avanzati ("w+", "r+", "a+") che permettono di modificare il cursore del file e quindi decidere in che posizione agire.\\
-La funzione \textbf{fopen()} inoltre restituisce l'indirizzo della struttura file associata al flusso che crea,mentre restituisce NULL se c'è stato qualche errore in fase di apertura del flusso.
+Esistono anche modalità avanzate (\colorbox{light-gray}{"w+"}, \colorbox{light-gray}{"r+"}, \colorbox{light-gray}{"a+"}) che permettono di modificare il cursore del file, decidendo in che posizione del file agire.\\
+Ad ogni apertura di un file deve corrispondere una chiusura, attraverso la funzione \colorbox{light-gray}{fclose()}:
+\begin{lstlisting}[title={Interfaccia funzione close()}]
+fclose(<file>);
+\end{lstlisting}
 \section{Operazioni di lettura e scrittura su file}
-In questa sezione vengono presentati i metodi di lettura e scrittura su file, con esempi di file binari e di testo.
-\begin{lstlisting}[title={File di testo (.txt)}]
-//creazione del puntatore alla struttura file
+Per la scrittura su un file di testo:
+\begin{lstlisting}[title={Scrittura su file di testo}]
+fputc(int c, file_output); // ritorna EOF come errore
+fputs(stringa, file_output); // ritorna EOF come errore
+fprintf(file_output, [formato_output], [var_list variabili]); // ritorna il numero di elementi scritti
+\end{lstlisting}
+
+Per la lettura da un file di testo:
+\begin{lstlisting}[title={Lettura da file di testo}]
+carattere = fgetc(file_input); // ritorna EOF come errore
+fgets(stringa, lunghezza, file_input); // fino a newline o EOF; ritorna EOF come errore
+fscanf(file_input, [formato_input], [var_list puntatori]); // ritorna il numero di elementi letti
+\end{lstlisting}
+
+Per verificare se ci si trova alla fine del file:
+\begin{lstlisting}[title={Controllo fine file}]
+int result = feof(file_input); // se la fine e' stata raggiunta, result assume un valore diverso da 0
+\end{lstlisting}
+Seppur la libreria standard del C offre questa funzione, quando bisogna leggere in insieme di elementi di cui non si conosce la dimensione è consigliato utilizzare \colorbox{light-gray}{fscanf()}. In particolare il controllo da eseguire è sul valore di ritorno di fscanf: se non sono stati letti tanti elementi quanti ci si aspetterebbe, allora il file è concluso.\\
+
+Per lettura e scrittura su file binario:
+\begin{lstlisting}[title={Controllo fine file}]
+int n_read_elem = fread (void *ptr, len_elemento, n_elementi, file_input);
+int n_written_elem = fwrite(void *ptr, len_elemento, n_elementi, file_input);
+\end{lstlisting}
+Una caratteristica interessante delle funzioni relative ai file binari è quella di offrire la possibilità di lettura/scrittura di tipi di dato, sia \textit{built-in} che \textit{user-defined}, con una singola istruzione.
+
+\section{Alcuni esempi}
+\begin{lstlisting}[title={Scrittura su file di testo}]
+// creazione del puntatore alla struttura file
 FILE *f_txt;
-int x=7;
-char testo[20];
-//apertura file in modalita' scrittura con controllo sull'apertura
-if((f_txt=fopen("nomefile.txt", "w"))==NULL){
-	printf("errorre apertura file fase w");
+int x = 7;
+
+// apertura file in modalita' scrittura con controllo sull'apertura
+if ((f_txt=fopen("nomefile.txt", "w")) == NULL){
+	printf("errore apertura file fase w");
 }
-//scrittura sul file
-fprintf(f_txt, "numero_piccioni: %d"/*(tipo della variabile da scrivere)*/, x);
+
+// scrittura sul file
+fprintf(f_txt, "numero_piccioni: %d", x);
 fprintf(f_txt, "si puo' scrivere anche solo testo", NULL);
-//chiusura del file (e dello stream)
-fclose(f_txt);
 
-//apertura file in modalita' lettura 
-if((f_txt=fopen("nomefile.txt", "r"))==NULL){
-printf("errorre apertura file fase r");
-}
-//lettura
-fscanf(f_txt, "%s: %d"/*tipi scritti esattamente come sono scritti nel file*/, &testo, &x);
-//chiusura stream
-fclose(f_txt);
-
-//apertura file modalita' append
-if((f_txt=fopen("nomefile.txt", "a"))==NULL){
-printf("errorre apertura file fase a");
-}
-//append
-fprintf(f_txt, "testo aggiunto\n", NULL);
-//chiusura
 fclose(f_txt);
 \end{lstlisting}
+
+\begin{lstlisting}[title={Lettura da file di testo}]
+FILE *f_txt;
+if((f_txt=fopen("nomefile.txt", "r"))==NULL){
+    printf("errore apertura file fase r");
+}
+
+int x;
+char testo[20];
+fscanf(f_txt, "%s: %d", &testo, &x); //lettura
+
+fclose(f_txt);
+\end{lstlisting}
+
+\begin{lstlisting}[title={Append di un file di testo}]
+FILE *f_txt;
+if ((f_txt=fopen("nomefile.txt", "a")) == NULL){
+    printf("errore apertura file fase a");
+}
+
+fprintf(f_txt, "testo aggiunto\n", NULL); // append
+
+fclose(f_txt);
+\end{lstlisting}
+
 \begin{lstlisting}[title={File binari (.bin)}]
 //creazione del puntatore alla struttura file
 FILE *f_bin;
 int x=12;
-char testo[20];
-//apertura file in modalita' scrittura bin con controllo sull'apertura 
-if((f_txt=fopen("nomefile.bin", "wb"))==NULL){ 
-printf("errorre apertura file fase wb");
-}
-/*se si sta programmando su windows per poter controllare il file si deve comunque dichiararlo come .txt*/
-//scrittura sul file bin
-fwrite(&x, sizeof(int), 1, f_bin);
-/*i dati inseriti sono: indirizzo della variabile da copiare, dimensione, numero di dati di quel tipo che vengono copiati, indirizzo del file*/
-//scrittura di una stuttura su file bin
-typedef struct Tdato {
-	int a,b,c;
-}
-Tdato d, d2; 
-d.a=d.b=d.c=26;
-fwrite(&d, sizeof(Tdato), 1, f_bin);
-//chiusura del file (e dello stream)
-fclose(f_bin);
 
-//apertura file in modalita' lettura bin
-if((f_txt=fopen("nomefile.bin", "rb"))==NULL){
-printf("errorre apertura file fase rb");
+if ((f_txt=fopen("nomefile.bin", "wb")) == NULL){ 
+    printf("errore apertura file fase wb");
 }
-//lettura bin
-fread(&d2, sizeof(Tdato), 1, f_bin);
-//chiusura stream
-fclose(f_bin);
 
-//apertura file modalita' append bin
-if((f_txt=fopen("nomefile.txt", "ab"))==NULL){
-printf("errorre apertura file fase ab");
-}
-fwrite(&d2, sizeof(Tdato), 1, f_bin);
-//chiusura
+// se si sta programmando su Windows, per poter controllare il file si deve comunque dichiararlo come .txt
+
+fwrite(&x, sizeof(int), 1, f_bin); // scrittura sul file bin
 fclose(f_bin);
 \end{lstlisting}
-Un aspetto molto interessante da notare è che se si apre il file in modalità binaria si può copiare interamente un qualsiasi tipo di dato (\textit{built-in} o \textit{user-defined}) da file a variabile o viceversa con un solo comando, cosa che non è possibile se si apre lo stream con un file in modalità testo.
+
+\begin{lstlisting}[title={Scrittura di una struttura su file binario}]
+typedef struct Tpunto {
+    float x, y;
+} Tpunto;
+
+Tpunto p1;
+p1.x = p2.x = 0.3;
+FILE *f_bin;
+if ((f_txt=fopen("nomefile.bin", "wb")) == NULL){ 
+    printf("errore apertura file fase wb");
+}
+
+fwrite(&p1, sizeof(Tpunto), 1, f_bin); // scrittura binaria di un elemento Tpunto
+fclose(f_bin);
+\end{lstlisting}
+
+\begin{lstlisting}[title={Lettura di una struttura da file binario}]
+typedef struct Tpunto {
+    float x, y;
+} Tpunto;
+
+Tpunto p1;
+FILE *f_bin;
+if((f_txt=fopen("nomefile.bin", "rb")) == NULL){
+    printf("errore apertura file fase rb");
+}
+
+fread(&p1, sizeof(Tpunto), 1, f_bin); // lettura binaria di un elemento Tpunto
+
+fclose(f_bin);
+\end{lstlisting}
+
+\begin{lstlisting}[title={Scrittura di una stuttura su file binario in append}]
+typedef struct Tpunto {
+    float x, y;
+} Tpunto;
+
+Tpunto p1;
+p1.x = p2.x = 0.3;
+FILE *f_bin;
+if ((f_txt=fopen("nomefile.txt", "ab")) == NULL){
+    printf("errore apertura file fase ab");
+}
+
+fwrite(&d2, sizeof(Tdato), 1, f_bin); // scrittura binaria di un elemento Tpunto
+
+fclose(f_bin);
+\end{lstlisting}
