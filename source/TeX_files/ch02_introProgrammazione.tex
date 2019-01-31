@@ -208,6 +208,18 @@ int *singlePtr = &numero;
 int **doublePtr = &singlePtr; // doublePtr contiene l'indirizzo di singlePtr
 \end{lstlisting}
 
+\subsection{Aritmetica dei puntatori}
+\`{E} possibile eseguire operazioni di incremento, decremento, somma e differenza fra puntatori:
+\begin{lstlisting}[title = {Esempi sull'aritmetica dei puntatori}]
+int vettore[] = {1, 2, 3};
+int *ptr = vettore; // ptr punta alla cella contenente 1
+ptr++; // ora ptr punta alla cella di memoria successiva, contenente 2
+ptr--; // ora ptr punta alla cella cella contenente 1
+ptr = ptr+2; // ora ptr punta alla cella cella contenente 3
+int result = ptr - vettore // e' pari a 2, ossia al numero di elementi int fra i due puntatori
+
+\end{lstlisting}
+
 \section{Funzioni}\label{funzioni}
 \subsection{Sottoprogrammi: funzioni e procedure}
 Le \textbf{funzioni} sono veri e propri sottoprogrammi che una volta inseriti nel codice possono essere riutilizzati più e più volte, senza creare ripetizioni nel codice. Ciò migliora il mantenimento e l'usabilità del codice.\\
