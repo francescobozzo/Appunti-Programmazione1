@@ -1,24 +1,24 @@
 \chapter{Stringhe}
 
 \section{Il concetto di stringa}
-Come già visto nel capitolo "vettori e matrici" le stringhe sono strettamente legate al concetto di array, precisamente queste altro non sono che array di elementi di tipo char nalla cui ultima cella è contenuto il carattere "$\backslash0$" che viene identificato terminatore di stringa.\\Le stringhe, essendo usate comunemente, hanno una serie di comandi che ne semplificano il trattamento, come ad esempio il fatto che si possa stampare una stringa (utilizzando l'identificatore \%s nella printf) senza dover implementare il classico ciclo che itera lungo tutto l'array stampandolo carattere per carattere. 
-\section{Comandi dedicati alle stringhe}
-Oltre a questo esiste una libreria standard interamente dedicata, <string.h>, che comprende comandi utilissimi quali \textbf{strcpy()} e \textbf{strlen()} il cui funzionamento è illustrato nell'esempio sottostante:
-\begin{lstlisting}[title={Comandi comodi per trattare le stringhe}]
-char str1[5], str2[5];
-//esempi di printf e scanf semplificati
-scanf("%s", &str1);
-//copia direttmente in str1 il contenuto di stdin
-printf("%s", str1);
-//stampa direttamente la stringa str1 completa
+Come già visto nel capitolo \ref{vettori}, le stringhe sono strettamente legate al concetto di array, precisamente queste altro non sono che array di elementi di tipo char nalla cui ultima cella è contenuto il carattere "$\backslash0$", identificato \textit{terminatore di stringa}.\\
+Essendo usate comunemente, le stringhe hanno una serie di comandi che ne semplificano l'input e l'output (utilizzando il descrittore di formato \colorbox{light-gray}{\%s}).
 
-strcpy(str1, "cane");
-//copia in str1 la stringa cane e aggiunge '\0'
-strcpy(str2, str1);
-//copia il contenuto di str2 in str1 ('\0' compreso)
-int lunghezza;
-lunghezza=strlen(str1);
-//restituisce la lunghezza di str1
+\section{Operazioni con le stringhe}
+Oltre a questo esiste una libreria standard interamente dedicata, \colorbox{light-gray}{string.h}, che comprende alcune utili funzioni quali \colorbox{light-gray}{strcpy()}, \colorbox{light-gray}{strlen()} e \colorbox{light-gray}{strcmp()}:
+\begin{lstlisting}[title={Alcune operazione con le stringhe}]
+char str1[5], str2[5];
+
+fflush(stdin); // per Windows, da utilizzare prima di qualsiasi lettura di stringhe
+scanf("%s", str1);
+printf("%s", str1);
+
+strcpy(str1, "cane"); //copia in str1 la stringa "cane"
+strcpy(str2, str1); // copia il contenuto di str1 in str2
+
+int lunghezza = strlen(str1); // restituisce la lunghezza di str1
+
+bool uguali = strcmp(str1, "cane") == 0; // restituisce zero se uguali, >0 se str1>cane, <0 altrimenti
 \end{lstlisting}
 \section{Nota tecnica}
-Ricorda sempre che l'ultimo carattere di una stringa deve essere il terminatore "$\backslash0$" e quindi per scrivere una parola di \textit{n} lettere necessiteremo di un array di lunghezza \textit{n+1}.
+Considerando che l'ultimo carattere di una stringa deve essere il terminatore "$\backslash0$", e per scrivere una parola di \textit{n} lettere, bisogna utilizzare un array di lunghezza \textit{n+1}.
