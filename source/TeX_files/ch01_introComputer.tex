@@ -1,16 +1,17 @@
 \chapter{Introduzione all'informatica e al computer}
 \section{Definizione di informatica}
-\textit{Informàtica} s. f. [dal fr. informatique, comp. di informat(ion) e (automat)ique «informazione automatica»], definita dalla Treccani come l’insieme dei vari aspetti scientifici e tecnici che sono specificamente applicati alla raccolta e al trattamento dell’informazione e in partica all’elaborazione automatica dei dati.\\
+\textit{Informàtica} s.f.[dal fr. informatique, comp. di informat(ion) e (automat)ique «informazione automatica»], definita dalla Treccani come l’insieme dei vari aspetti scientifici e tecnici che sono specificamente applicati alla raccolta e al trattamento dell’informazione e in partica all’elaborazione automatica dei dati.\\
 \section{Elementi di base}
-Ecco una breve lista degli elemnti basilari di questa scienza:
+Questa introduzione è statacreata poichè prima di addentrarsi nel mondo della programmazione è giusto comprendere (o per alcuni semplicemente ricordare) cos'è l'informatica e che cosa studia, nonchè quali sono i suoi obbiettivi ed i suoi concetti basilari, perchè spesso capita di addentrarsi così tanto tra le righe di codice da perdere la limpidezza della visione generale su quello che si sta facendo.\\ 
+A questo scopo abbiamo introdotto la definizione precedente e questo breve elenco dei conceti fondamentali di questa branca della scienza.
 \begin{itemize}
-	\item\textbf{Algoritmo}: un algoritmo è una sequenza precisa (=deterministica) e finita di operazioni, comprensibili da un esecutore, che portano alla realizzazione di un compito.
+	\item\textbf{Algoritmo}: un algoritmo è una sequenza precisa (=deterministica) e finita di operazioni, comprensibili da un esecutore, che portano alla realizzazione di un compito. L'esecutore non deve essere per forza di cose un computer, anche un libretto di istruzioni per montare un mobile è di per sè un algoritmo e l'umano che lo utilizza ne è l'esecutore.
 	Le proprietà fondamentali di un algoritmo sono \textit{correttezza} ed \textit{efficienza}. Quando si opera con i calcolatori, gli algoritmi sono descritti utilizzando linguaggi che essi comprendono, i linguaggi di programmazione. 
 
-	\item\textbf{Linguaggio di programmazione}: deve essere deterministico e rigoroso, esso è caratterizzato da: 
+	\item\textbf{Linguaggio di programmazione}: linguaggio specifico del campo informatico dedicato a descrivere le istruzioni ad un calcolatore, perciò deve essere deterministico e rigoroso; inoltre esso è caratterizzato da: 
 	\begin{itemize}
-	    \item\textit{Sintassi}, cioè le regole che descrivono le stringhe di parole riconosciute dal linguaggio.
-	    \item\textit{Semantica}, ovvero le regole per interpretazione delle stringhe e che descrivono i processi computazionali dell’ esecutore.
+	    \item Una \textit{Sintassi}, cioè le regole che descrivono le stringhe di parole riconosciute dal linguaggio.
+	    \item Una \textit{Semantica}, ovvero le regole per interpretazione delle stringhe e che descrivono i processi computazionali dell’ esecutore.
 	\end{itemize}
     I linguaggi di programmazione si possono definire di alto o basso livello a seconda della loro maggiore vicinanza al linguaggio naturale (facilmente interpretabile dagli umani) o a quello della macchina (facilmente interpretabile dai calcolatori).
 
@@ -19,17 +20,36 @@ Ecco una breve lista degli elemnti basilari di questa scienza:
 \end{itemize}
 
 \section{Il computer}
-Al giorno d'oggi esistono molti tipi di computer con caratteristiche e scopi diversi tra loro ma nonostante questo si possono elencare i componenti più importanti di un calcolatore che sono presenti nella maggior parte di essi:
+Ora che abbiamo chiarito velocemente i concetti fondamentali possiamo iniziare a parlare degli strumenti di cui la scienza dell'informatica fa uso. \\
+Al giorno d'oggi esistono molti tipi di computer con caratteristiche e scopi diversi tra loro ma nonostante questo si possono elencare i componenti più importanti di un calcolatore che sono presenti nella maggior parte dei casi:
 	\begin{itemize}
-	\item\textbf{CPU}: è l’unità di elaborazione del calcolatore, essa carica istruzioni da eseguire dalla memoria centrale, interpreta le istruzioni ed infine le esegue ( e.s. calcolo numerico o trasferimento di informazioni da una memoria all’altra).
-	Il lavoro della CPU è scandito da impulsi generati da un orologio interno (\textit{clock}), più è elevata la frequenza degli impulsi del \textit{clock} più sono le istruzioni eseguite nell’unità di tempo; Al giorno d'oggi la velocità del \textit{clock} non si sposta molto da 3GHz per problemi relativi alla dissipazione del calore, tuttavia la velocità dei computer è andata comunque aumentando per via dell'introduzione di nuove architetture nella progettazione dei calcolatori (es.: computer multi-core).
-	\item\textbf{Memoria centrale (RAM)}: utilizzata per memorizzare dati e istruzioni; la \textit{Random Access Memory} è una memoria il cui tempo di accesso è indipendente dall’indirizzo del dato al quale si vuole accedere (al contrario dei nastri magnetici). Si tratta di una memoria volatile, cioè il contenuto viene perso quando cessa l’alimentazione del sistema.
-	\item\textbf{Bus di sistema}: interconnette tutti gli altri componenti, consentendo lo scambio di dati.
-	\item\textbf{Periferiche di I/O}: ne esistono vari tipi: memorie di massa, monitor, tastiere, schede di rete, sensori etc.; non sono componenti fondamentali del calcolatore  ma permettono che esso venga utilizzato per una quantità enorme di funzioni diverse.
-	\item\textbf{Memorie ROM}: sono un tipo particolare di memoria su cui non è consentita la lettura (\textit{Read Only Memory}) che vengono utilizzate per memorizzare i dati costanti in un calcolatore come i firmware (software di base per il calcolatore, come il \textbf{BIOS});
+	\item\textbf{CPU}: è l’unità di elaborazione del calcolatore (\textit{Central Processing Unity}), essa carica istruzioni da eseguire dalla memoria centrale, interpreta le istruzioni ed infine le esegue ( e.s. calcolo numerico o trasferimento di informazioni da una memoria all’altra).
+	Il lavoro della CPU è scandito da impulsi generati da un orologio interno (\textit{clock}), più è elevata la frequenza degli impulsi del \textit{clock} più sono le istruzioni eseguite nell’unità di tempo; Da molti anni la velocità del \textit{clock} non si scosta di molto da 3GHz per problemi relativi alla dissipazione del calore, tuttavia la velocità dei computer è andata comunque aumentando per via dell'introduzione di nuove architetture nella progettazione dei calcolatori (es.: computer \textit{multi-core}).
+	\item\textbf{Memoria centrale (RAM)}: utilizzata per memorizzare dati e istruzioni, la \textit{Random Access Memory} è una memoria il cui tempo di accesso è indipendente dall’indirizzo del dato al quale si vuole accedere (al contrario delle memorie di massa). Si tratta di una memoria volatile, cioè il contenuto viene perso quando cessa l’alimentazione del sistema.
+	\item\textbf{Bus di sistema}: interconnette tutti gli altri componenti, consentendo lo scambio di dati; esso è suddiviso in tre insiemi di \textit{linee}: 
+	\begin{itemize}
+		\item Bus \textbf{dati}, per la trasmissione dei dati; 
+		\item Bus \textbf{indirizzi}, un bus unidirezionale attraverso il quale la CPU decide in quale indirizzo scrivere o leggere i dati;
+		\item Bus \textbf{di controllo}: trasporta informazioni relative alla modalità di trasferimento e alla temporizzazione.
+	\end{itemize}
+	In ogni istante è dedicato a collegare due unità, di cui una trasmette ed una riceve.
+	\item\textbf{Periferiche di I/O}: ne esistono vari tipi: memorie di massa, monitor, tastiere, schede di rete, sensori etc.; non sono componenti fondamentali del calcolatore  ma permettono che esso venga utilizzato per un'enorme quantità di funzioni diverse.
+	\item\textbf{Memorie ROM}: sono un tipo particolare di memoria su cui non è consentita la lettura (\textit{Read Only Memory}) che vengono utilizzate per memorizzare i dati costanti in un calcolatore come i firmware (software di basso livello, che comunicano direttamente con l'hardwarew, come il \textbf{BIOS}).
+	
 \end{itemize}
 
 \section{La macchina di Von Neumann}
-L’hardware sulla maggior parte dei computer moderni è progettato secondo lo schema di Von Neumann che prevede esattamente le componenti indicate nell'elenco precedente; Il funzionamento di questa macchina schematicamente si può riassumere così:\\
-Le fasi di elaborazione si susseguono in modo sincrono rispetto all'orologio di sistema (\textit{clock}). Durante ogni intervallo di tempo l’unità di controllo (parte del processore) stabilisce la funzione da svolgere e l’intera macchina opera in maniera sequenziale (anche se le architetture più evolute prevedono esecuzione contempoarnea di più istruzioni). Tutte le varie componenti della macchina sono collegate tra loro (e alla \textbf{CPU}, il direttore d'orchestra) tramite il bus di sistema che in ogni istante è dedicato a collegare due unità, di cui una trasmette ed una riceve.
+L’hardware sulla maggior parte dei computer moderni è progettato secondo lo schema della macchina di Von Neumann che prevede esattamente le componenti indicate nell'elenco precedente; Il funzionamento di questa macchina schematicamente si può riassumere così:\\
+Le fasi di elaborazione si susseguono in modo sincrono rispetto all'orologio di sistema (\textit{clock}). Durante ogni intervallo di tempo l’unità di controllo (parte del processore) stabilisce la funzione da svolgere e l’intera macchina opera in maniera sequenziale (anche se le architetture più evolute prevedono esecuzione contempoarnea di più istruzioni).\\
+Il Bus di sistema collega tra loro tutte le componenti del calcolatore tra loro ed alla CPU che gestisce tutti i flussi in ingresso ed uscita, usando una metafora musicale essa è il direttore dell'orchestra.
+
+\section{Astrazione e stratificazione}
+Questi due concetti si sono rivelati fondamentali nell'evoluzione dell'informatica e nello sviluppo della tecnologia: con il passare del tempo si sono costruiti calcolatori sempre più potenti e più complessi e questo ha richiesto specularmente lo sviluppo di software semre più complessi che dovevano essere in grado di gestire appunto gli hardware più evoluti, per non complicare eccessivamente la questione i programmatori hanno provveduto ad una progressiva astrazione dei software stessi in modo da trovarsi ad operare su rappresentazioni semplificate della macchina. Ma nonostante questo anche i programmi stessi hanno iniziato a diventare sempre più onerosi da gestire e la soluzione che è stata adottata è quella di creare vari livelli di astrazione a partire dalla macchina fisica fino ad arrivare alle applicazioni usate quotidianamente dagli utenti, ecco uno schema della stratificazione che si è verificata: 
+\\INSERISCI TABELLA\\
+
+\section{Rappresentazione dell'informazione}
+Lultimo argomento che tatteremo prima di passare al linguaggio C è la rappresentazione dell'informazione nella scienza informatica, che è strettamente legata ai mezzi di cui questa scienza si serve:\\
+essendo strutturalmente basato su dispositivi bistabili (con due stati stabili che possono essere utilizzati come base della rappresentazione), l'elaboratore elettronico può operare solo su sequenze di simboli binari. I due simboli convenzionalmente usati sono 0 e 1. Con il termine \textbf{BIT} (da \textit{Bynary digIT}) si intende l’unità elementare di informazione; comandi e dati sono rappresentati nel computer tramite sequenze di BIT. %Spesso si utilizzano anche i multipli del \textbf{BIT}, ovvero il Byte(=8 Bit) ed i suoi multipli: KiloByte(=1000 Byte), MegaByte(=^10{6} Byte), GigaByte(=^10{9} Byte).%
+\\Per citare un esempio la rappresentazione di caratteri avviene riservando un byte (cioè 8 bit) per ogni carattere, e controllando su una tabella (extended ASCII) che dà la corrispondenza tra la sequenza e il carattere es.: a = 97 (decimale) = 01100001 (binario).
+
 
