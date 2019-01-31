@@ -311,6 +311,66 @@ int generaNumeroCasuale(int min, int max){
 \end{lstlisting}
 
 \section{Enumerazioni}
+Il costrutto \colorbox{light-gray}{enum} permette di definire un nuovo tipo le cui variabili possono assumere solo un numero finito e predeterminato di valori.
+\begin{lstlisting}[title={Utilizzo di un tipo enum}]
+enum seme {cuori, picche, fiori, quadri}; // definizione
+enum seme semeCarta; // dichiarazione
+semeCarta = cuori; // inizializzazione
+\end{lstlisting}
+In realtà, i membri di un'enumerazione sono rappresentati da costanti intere. Nell'esempio precedente "cuori" è rappresentato da uno 0, "picche" da un 1, e così via. \`{E} inoltre possibile modificare questa numerazione:
+\begin{lstlisting}[title={Modifica numerazione di un enum}]
+enum seme {cuori=3, picche, fiori, quadri};
+// il compilatore automaticamente setta:
+//  - picche=4
+//  - fiori=5
+//  - quadri=6
+\end{lstlisting}
+Spesso una definizione di un tipo enum è accompagnata da un'operazione di \colorbox{light-gray}{typedef}, che permette di definire un nuovo tipo:
+\begin{lstlisting}[title={Utilizzo di un tipo enum con typedef}]
+typedef enum seme {cuori, picche, fiori, quadri} seme; // definizione
+seme semeCarta; // dichiarazione
+semeCarta = cuori; // inizializzazione
+\end{lstlisting}
+In realtà, attraverso una semplice istruzione del tipo \colorbox{light-gray}{typedef a b;} tutte le occorrenze nel codice di \colorbox{light-gray}{a} vengono sostituite con \colorbox{light-gray}{b}: typedef è infatti semplicemente un operatore sintattico.
 
 \section{Strutture}
+\subsection{Definizione e dot notation}
+In C è possibile definire una \textbf{struct}, ossia una struttura dati che raggruppa variabili eterogenee (di tipo diverso). Ogni elemento che la compone viene definito \textit{campo} della struttura: data una variabile di tipo struttura è possibile accedere ai campi della stessa utilizzando la \textit{dot notation}.
+\begin{lstlisting}[title={Esempio di definizione di struttura}]
+// definizione
+struct Impiegato{
+    char nome[20];
+    char cognome[20];
+    float stipendio;
+    char codiceFiscale[16];
+};
 
+struct Impiegato impiegato1; // dichiarazione
+impiegato1.stipendio = 1200.50; // dot notation
+\end{lstlisting}
+Come per le enumerazioni, si può utilizzare anche con le strutture l'operatore sintattico \colorbox{light-gray}{typedef}:
+\begin{lstlisting}[title={Esempio di definizione di struttura con typedef}]
+typedef struct Punto{
+   float x, y;
+} Punto;
+
+Punto punto1;
+\end{lstlisting}
+\`{E} possibile utilizzare anche per le strutture l’operatore unario \colorbox{light-gray}{sizeof}, il quale restituisce il numero di byte occupati in memoria.\\
+\underline{Nota}
+\begin{itemize}[noitemsep]
+	\item non è definito l'operatore \colorbox{light-gray}{==} di confronto fra strutture.
+	\item per effettuare la copia di una struttura basta usare l'operatore di assegnazione \colorbox{light-gray}{=}.
+\end{itemize}
+
+\subsection{Puntatori a strutture}
+Quando vi è la necessità di passare una determinata struttura ad una funzione come parametro, spesso si utilizza il passaggio per riferimento: è infatti molto meno onerosa la copia di un singolo puntatore piuttosto che la copia di una intera struttura. Spesso perciò torna utile il qualificatore \colorbox{light-gray}{const}, che vieta alla funzione di modificare la struttura che le è stata passata per riferimento.\\
+
+Quando si utilizza un puntatore a struttura, per accedere ad un campo della stessa è possibile utilizzare la notazione \colorbox{light-gray}{->} piuttosto che la dot notation.
+\begin{lstlisting}[title={Accesso ai campi di un puntatore a struttura}]
+Punto p1;
+Punto *ptr = &p1;
+
+(*p1).x = 1; // dot notation
+p1->y = 2; // notazione ->
+\end{lstlisting}
