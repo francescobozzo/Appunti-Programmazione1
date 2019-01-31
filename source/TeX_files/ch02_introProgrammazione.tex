@@ -1,1 +1,199 @@
 \chapter{Introduzione alla programmazione C}
+
+\section{La nascita del C}
+La necessità di introdurre un nuovo linguaggio di programmazione al di fuori del linguaggio macchina nasce dalla necessità di ottenere una maggiore astrazione astrazione:
+\begin{itemize}[noitemsep]
+	\item astrazione della memoria: utilizzare alias per identificare determinate celle di memoria.
+	\item astrazione delle istruzioni: esprimere istruzioni complesse in un linguaggio comprensibile al programmatore.
+	\item astrazione del linguaggio di definizione dell'algoritmo.
+\end{itemize}
+Il C venne inventato nel 1972 da \textit{Brian Kernighan} e \textit{Dennis Ritchie}, ai \textit{Bell Telephone Laboratories} con l’obiettivo di fornire un linguaggio flessibile e vicino alla macchina, tale da diventare il linguaggio di sistema per Unix.\\
+Molti linguaggi di programmazione, tra cui il C, necessitano di una macchina astratta per funzionare; questa altro non è che una copia “logica” della macchina di Von Neumann con un ingrediente in più: l’interprete del suo rispettivo linguaggio. Il vantaggio di usare una macchina astratta sta nel fatto che un programma sviluppato in un certo linguaggio può funzionare su qualsiasi hardware su cui è installata la rispettiva macchina astratta.
+
+\section{Astrazione della memoria}
+Si definisce come \textbf{variabile} un contenitore di un determinato tipo di dati situato in una specifica porzione di memoria. I dati contenuti all'interno di una variabile sono suscettibili a modifica nel corso dell'esecuzione del programma.
+\begin{lstlisting}[title={Dichiarazione di variabili}]
+int numero; // dichiarazione di una variabile di tipo intero
+char carattere; // dichiarazione di una variabile di tipo carattere
+float virgola_1, virgola_2;// dichiarazione di due variabili per contenere valori con la virgola
+
+numero = 1; // inizializzazione della variabile numero
+\end{lstlisting}
+Una variabile è dunque caratterizzata da un \textit{identificatore} (\textit{l-value}) e da un \textit{valore} (\textit{r-value}). Quando in una espressione utilizziamo l'identificatore di una variabile, viene considerato il suo valore.\\
+Bisogna però prestare attenzione:
+\begin{itemize}[noitemsep]
+	\item Non è possibile inizializzare o utilizzare una variabile se non è stata precedentemente dichiarata.
+	\item Gli identificatori delle variabili possono contenere unicamente caratteri alfanumerici della tabella \textit{ASCII} e "\_". Il primo carattere non può essere un numero.
+	\item Gli identificatori delle variabili non possono essere \textit{keyword} del linguaggio C.
+	\item Il C è case sensitive: \colorbox{light-gray}{nomeVariabile} è dunque diverso da \colorbox{light-gray}{nomevariabile}.
+\end{itemize}
+
+\subsection{L'attributo \textit{const}}
+Attraverso l'attributo \textit{const} è possibile dichiarare una costante: essa è del tutto analoga ad una variabile, tranne per il fatto che il suo valore non è modificabile durante il corso del programma.
+\begin{lstlisting}[title={Dichiarazione di una costante}]
+const float pi = 3.14;
+\end{lstlisting}
+
+\section{Le espressioni}
+Le \textbf{espressioni} in C vengono valutate seguendo l'albero sintattico indotto dalla \textit{priorità degli operatori} e dalle parentesi.\\
+Il valore di un'espressione può essere calcolato anche senza valutare l'intero albero sintattico, ove possibile. Questo meccanismo prende il nome di \textit{lazy-evaluation}.
+\begin{lstlisting}
+int a = 5;
+bool test = (a<4) && (a>0); // in questo caso viene valutata solo (a<4), in quanto il suo valore e' false.
+\end{lstlisting}
+
+\section{IO con il terminale}
+
+\subsection{La funzione \textit{printf}}
+La funzione \colorbox{light-gray}{printf()} permette di scrivere del testo sulla standard output. Il primo argomento della funzione è una stringa formattata attraverso dei \textit{descrittori di formato} (chiamati anche segnaposto). Seguono tanti argomenti quanti sono i segnaposto della stringa formattata.
+In base al tipo di dato che si vuole stampare si utilizzano diversi descrittori di formato:
+\begin{itemize}[noitemsep]
+	\item \colorbox{light-gray}{\%d} per numeri interi.
+	\item \colorbox{light-gray}{\%f} per numeri con virgola.
+	\item \colorbox{light-gray}{\%c} per caratteri.
+	\item \colorbox{light-gray}{\%s} per stringhe.
+\end{itemize}
+\`{E} possibile specificare quanti caratteri riservare ad un segnaposto: l'output legato a quel descrittore di formato viene allineato a destra. Se necessario, il padding di default viene effettuato con " ": è comunque possibile specificare un carattere diverso.
+
+\begin{lstlisting}[title={Esempi di output con printf}]
+printf("%d + %d = %d", 1, 2, 1+2); 1 + 2 = 3
+printf("%2d/%2d/%4d %2d:%2d", giorno, mese, anno, ore, minuti); // padding con " "
+printf("%02d/%02d/%4d %02d:%02d", giorno, mese, anno, ore, minuti); // padding con "0"
+\end{lstlisting}
+
+All'interno della stringa formattata è possibile utilizzare i caratteri di \textit{escape}:
+\begin{itemize}[noitemsep]
+	\item \colorbox{light-gray}{"$\backslash$n"} per andare a capo.
+	\item \colorbox{light-gray}{"$\backslash$r"} carriage return.
+	\item \colorbox{light-gray}{"$\backslash$t"} per una tabulazione.
+	\item \colorbox{light-gray}{"$\backslash$"} per scrivere "$\backslash$".
+	\item \colorbox{light-gray}{"$\backslash$"} per scrivere """.
+\end{itemize}
+
+
+\subsection{La funzione \textit{scanf}}
+La funzione \colorbox{light-gray}{scanf()} permette di leggere dei dati dallo standard input. La sintassi è del tutto analoga alla funzione di printf, tranne per il fatto di porre una "\&" prima di ogni variabile utilizzata come argomento della funzione (nel caso di array non bisogna utilizzare "\&"). Ulteriori spiegazioni verranno date alle sezioni \ref{puntatori} e \ref{funzioni}.\\
+Come di seguito, si consiglia di leggere un solo valore per ciascuna singola chiamata di scanf.
+\begin{lstlisting}[title={Esempi di input con scanf}]
+int a, b;
+char c;
+scanf("%d", &a);
+scanf("%d", &b);
+
+fflush(stdin); // da utilizzare su Windows prima di leggere un carattere
+scanf("%c, &c);
+\end{lstlisting}
+
+\begin{lstlisting}[title={Leggere una sequenza di caratteri uno alla volta}]
+int c; // getchar restituisce un intero (deve contenere il valore EOF)
+while ((c=getchar()) != EOF) { ... }
+\end{lstlisting}
+
+\section{Strutture di controllo}
+
+\subsection{Il costrutto \textit{if-else}}
+Il costrutto \colorbox{light-gray}{if} permette di compiere delle azioni sulla base della valutazione di una espressione booleana. Il blocco di codice fra parentesi graffe viene infatti eseguito se l'espressione fra parentesi tonde è valutata vera.
+\begin{lstlisting}[title={Struttura del costrutto if}]
+if (<espressione>){
+    ...
+}
+\end{lstlisting}
+Quando si utilizza il costrutto if, è possibile (quindi è opzionale) farlo seguire dal blocco \colorbox{light-gray}{else}.
+\`{E} possibile inoltre creare una catena a cascata di \colorbox{light-gray}{else-if}:
+\begin{lstlisting}[title={Utilizzo di if, else-if e ramo else}]
+if (numero > 0){
+    printf("numero positivo");
+} else if (numero < 0) {
+    printf("numero negativo");
+} else {
+    printf("numero nullo");
+}
+\end{lstlisting}
+
+\subsection{Il costrutto \textit{switch}}
+In quei casi in cui la catena a cascata di else-if risulta troppo prolissa, è possibile utilizzare il costrutto \colorbox{light-gray}{switch} in maniera del tutto simile:
+\begin{lstlisting}[title={Struttura del costrutto switch}]
+switch (<integral value>){ // carattere o un numero
+    case value1:
+        ...
+        break;
+    case value2:
+        ...
+        break;
+    default:
+        ...
+        break;
+}
+\end{lstlisting}
+\`{E} importante sottolineare che le istruzioni all'interno del costrutto switch vengono eseguite in sequenza a partire dal \colorbox{light-gray}{case} il cui valore corrisponde a quello della variabile fra parentesi tonde. L'istruzione di \colorbox{light-gray}{break} permette di uscire dal blocco dello switch.
+
+\begin{lstlisting}[title={Significato dell'istruzione break}]
+int carattere = 'a';
+switch (carattere){
+    case 'a':
+    case 'e':
+    case 'i':
+    case 'o':
+    case 'u':
+        printf("vocale");
+    default:
+        printf("non e' una vocale");
+        break;
+}
+\end{lstlisting}
+Anche se è consigliata, l'istruzione break non è necessaria nel caso di default.\\
+Il costrutto switch è molto utilizzato con le enumerazioni.
+
+\section{Cicli}
+\subsection{Il costrutto \textit{while}}
+Il blocco di codice fra parentesi graffe viene ripetuto fino a quando l'espressione fra parentesi tonde è vera. L'espressione viene valutata prima di eseguire il blocco di istruzioni.
+\begin{lstlisting}[title={Struttura del costrutto while}]
+while (<espressione>){
+    ...
+}
+\end{lstlisting}
+
+\subsection{Il costrutto \textit{do-while}}
+Il blocco di codice fra parentesi graffe viene ripetuto fino a quando l'espressione fra parentesi tonde è vera. L'espressione viene valutata dopo aver eseguito il blocco di istruzioni (dunque il blocco di istruzioni viene eseguito almeno una volta).
+\begin{lstlisting}[title={Struttura del costrutto do-while}]
+do {
+    ...
+} while (<espressione>);
+\end{lstlisting}
+\begin{lstlisting}[title={Lettura carattere da tastiera}]
+char carattere;
+do {
+    scanf("%c", &carattere);
+} while (carattere<'a' || carattere>'z');
+\end{lstlisting}
+
+\subsection{Il costrutto \textit{for}}
+Il costrutto \colorbox{light-gray}{for} è una versione specializzata del costrutto while. Si consiglia l'utilizzo del for in quei casi dove si necessita di una variabile contatore.
+\begin{lstlisting}[title={Struttura del costrutto for}]
+for (<inizializzazione>; <espressione>; <incremento/decremento contatore){
+    ...
+}
+\end{lstlisting}
+\`{E} consigliato dichiarare la variabile con funzione di contatore al di fuori del costrutto \colorbox{light-gray}{for}.
+\begin{lstlisting}[title={Stampa i numeri da 1 a 10}]
+int i;
+for (i=1; i<=10; i++){
+    printf("%d\n", i);
+}
+\end{lstlisting}
+
+\subsection{Teorema di Bohem-Jacopini}
+\newtheorem*{theorem}{Teorema}
+\begin{theorem}[di Bohem-Jacopini]
+	Qualunque algoritmo può essere implementato in fase di programmazione utilizzando tre sole strutture dette strutture di controllo: la \textit{sequenza}, la \textit{selezione} ed il \textit{ciclo} (iterazione), da applicare ricorsivamente alla composizione di istruzioni elementari.
+\end{theorem}
+Come abbiamo visto nelle precedenti sezioni, il C presenta tutte e tre le ipotesi, dunque il C è un linguaggio completo.
+
+\section{Funzioni}\label{funzioni}
+
+
+\section{Enumerazioni}
+
+\section{Strutture}
+
+\section{Puntatori}\label{puntatori}
