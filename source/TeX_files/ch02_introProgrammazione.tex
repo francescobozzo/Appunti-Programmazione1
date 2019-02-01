@@ -1,7 +1,7 @@
 \chapter{Introduzione alla programmazione C}
 
 \section{La nascita del C}
-La necessità di introdurre un nuovo linguaggio di programmazione al di fuori del linguaggio macchina nasce dalla necessità di ottenere una maggiore astrazione astrazione:
+La nascita del linguaggio C avviene come conseguenza della necessità di introdurre un nuovo linguaggio di programmazione che renda possibile una maggiore astrazione rispetto al linguaggio macchina; i punti su cui il linguaggio C si basa e che lo hanno reso così importante sono appunto:
 \begin{itemize}[noitemsep]
 	\item astrazione della memoria: utilizzare alias per identificare determinate celle di memoria.
 	\item astrazione delle istruzioni: esprimere istruzioni complesse in un linguaggio comprensibile al programmatore.
@@ -11,7 +11,7 @@ Il C venne inventato nel 1972 da \textit{Brian Kernighan} e \textit{Dennis Ritch
 Molti linguaggi di programmazione, tra cui il C, necessitano di una macchina astratta per funzionare; questa altro non è che una copia “logica” della macchina di Von Neumann con un ingrediente in più: l’interprete del suo rispettivo linguaggio. Il vantaggio di usare una macchina astratta sta nel fatto che un programma sviluppato in un certo linguaggio può funzionare su qualsiasi hardware su cui è installata la rispettiva macchina astratta.
 
 \section{Astrazione della memoria}
-Si definisce come \textbf{variabile} un contenitore di un determinato tipo di dati situato in una specifica porzione di memoria. I dati contenuti all'interno di una variabile sono suscettibili a modifica nel corso dell'esecuzione del programma.
+Si definisce come \textbf{variabile} un contenitore di un determinato tipo di dato situato in una specifica porzione di memoria. Il dato contenuto all'interno di una variabile è suscettibile a modifica nel corso dell'esecuzione del programma.
 \begin{lstlisting}[title={Dichiarazione di variabili}]
 int numero; // dichiarazione di una variabile di tipo intero
 char carattere; // dichiarazione di una variabile di tipo carattere
@@ -19,7 +19,7 @@ float virgola_1, virgola_2;// dichiarazione di due variabili per contenere valor
 
 numero = 1; // inizializzazione della variabile numero
 \end{lstlisting}
-Una variabile è dunque caratterizzata da un \textit{identificatore} (\textit{l-value}) e da un \textit{valore} (\textit{r-value}). Quando in una espressione utilizziamo l'identificatore di una variabile, viene considerato il suo valore.\\
+Una variabile è dunque caratterizzata da un \textit{identificatore} (\textit{left-value}) e da un \textit{valore} (\textit{right-value}). Quando in una espressione utilizziamo l'identificatore di una variabile, durante il calcolo viene considerato il suo valore.\\
 Bisogna però prestare attenzione:
 \begin{itemize}[noitemsep]
 	\item Non è possibile inizializzare o utilizzare una variabile se non è stata precedentemente dichiarata.
