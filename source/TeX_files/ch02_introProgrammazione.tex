@@ -7,7 +7,7 @@ La nascita del linguaggio C avviene come conseguenza della necessità di introdu
 	\item astrazione delle istruzioni: esprimere istruzioni complesse in un linguaggio comprensibile al programmatore.
 	\item astrazione del linguaggio di definizione dell'algoritmo.
 \end{itemize}
-Il C venne inventato nel 1972 da \textit{Brian Kernighan} e \textit{Dennis Ritchie}, ai \textit{Bell Telephone Laboratories} con l’obiettivo di fornire un linguaggio flessibile e vicino alla macchina, tale da diventare il linguaggio di sistema per Unix.\\
+Il C venne creato nel 1972 da \textit{Brian Kernighan} e \textit{Dennis Ritchie}, ai \textit{Bell Telephone Laboratories} con l’obiettivo di fornire un linguaggio flessibile e vicino alla macchina, tale da diventare il linguaggio di sistema per Unix.\\
 Molti linguaggi di programmazione, tra cui il C, necessitano di una macchina astratta per funzionare; questa altro non è che una copia “logica” della macchina di Von Neumann con un ingrediente in più: l’interprete del suo rispettivo linguaggio. Il vantaggio di usare una macchina astratta sta nel fatto che un programma sviluppato in un certo linguaggio può funzionare su qualsiasi hardware su cui è installata la rispettiva macchina astratta.
 
 \section{Astrazione della memoria}
@@ -66,8 +66,8 @@ All'interno della stringa formattata è possibile utilizzare i caratteri di \tex
 	\item \colorbox{light-gray}{"$\backslash$n"} per andare a capo.
 	\item \colorbox{light-gray}{"$\backslash$r"} carriage return.
 	\item \colorbox{light-gray}{"$\backslash$t"} per una tabulazione.
-	\item \colorbox{light-gray}{"$\backslash$"} per scrivere "$\backslash$".
-	\item \colorbox{light-gray}{"$\backslash$"} per scrivere """.
+	\item \colorbox{light-gray}{"$\backslash\backslash$"} per scrivere "$\backslash$".
+	\item \colorbox{light-gray}{"$\backslash$""} per scrivere """.
 \end{itemize}
 
 
@@ -154,7 +154,7 @@ while (<espressione>){
 \end{lstlisting}
 
 \subsection{Il costrutto \textit{do-while}}
-Il blocco di codice fra parentesi graffe viene ripetuto fino a quando l'espressione fra parentesi tonde è vera. L'espressione viene valutata dopo aver eseguito il blocco di istruzioni (dunque il blocco di istruzioni viene eseguito almeno una volta).
+Il blocco di codice fra parentesi graffe viene ripetuto fino a quando l'espressione fra parentesi tonde è vera. L'espressione viene valutata dopo aver eseguito il blocco di istruzioni (dunque il blocco di istruzioni viene eseguito almeno una volta). Spesso è utilizzato nei controlli dell'input.
 \begin{lstlisting}[title={Struttura del costrutto do-while}]
 do {
     ...
@@ -187,7 +187,7 @@ for (i=1; i<=10; i++){
 \begin{theorem}[di Bohem-Jacopini]
 	Qualunque algoritmo può essere implementato in fase di programmazione utilizzando tre sole strutture dette strutture di controllo: la \textit{sequenza}, la \textit{selezione} ed il \textit{ciclo} (iterazione), da applicare ricorsivamente alla composizione di istruzioni elementari.
 \end{theorem}
-Come abbiamo visto nelle precedenti sezioni, il C presenta tutte e tre le ipotesi, dunque il C è un linguaggio completo.
+Come abbiamo visto nelle precedenti sezioni, il C presenta tutte e tre le ipotesi ed è dunque riconosciuto come \textit{linguaggio completo}.
 
 \section{Puntatori}\label{puntatori}
 Un puntatore è una variabile che contiene l’indirizzo di un’altra variabile (di un tipo specifico). Esso viene dichiarato utilizzando l’operatore di \textit{dereferenziazione} \colorbox{light-gray}{*}. 
@@ -206,6 +206,17 @@ int *ptr = &numero; // ptr contiene l'indirizzo di numero
 int numero = 12;
 int *singlePtr = &numero; 
 int **doublePtr = &singlePtr; // doublePtr contiene l'indirizzo di singlePtr
+\end{lstlisting}
+
+Tramite i puntatori si può accedere al right-value di una variabile (puntata) e operare su di esso:
+\begin{lstlisting}[title = {Operazioni su variabili tramite puntatori}]
+int x = 42;
+int *x_pointer;  
+// si crea il puntatore a intero "x_pointer"
+x_pointer = &x;  
+// si associa l'indirizzo di x al puntatore
+*x_pointer = 39; 
+// tramite la dereferenziazione (*) si opera su x assegnandogli il valore di 39
 \end{lstlisting}
 
 \subsection{Aritmetica dei puntatori}
@@ -257,7 +268,7 @@ int main(){
     printf("%d", a); // stampa 5
 }
 \end{lstlisting}
-Al contrario, utilizzando un puntatore è possibile eseguire un passaggio \textbf{per riferimento}: se viene modificato un argomento nel corpo di una funzione, la funzione chiamante risentirà di questi cambiamenti.
+Al contrario, utilizzando un puntatore è possibile eseguire un passaggio \textbf{per riferimento}, che consiste nel passare (sempre per valore) il punatore alla funzione e poi usare il suo  valore per accedere alla variabile a cui punta: se viene modificato in questo modo un argomento nel corpo di una funzione, l'ambiente della funzione chiamante risentirà di questi cambiamenti.
 \begin{lstlisting}[title={Il passaggio per riferimento}]
 void cambiaValore(int* a){
     *a = 6;
@@ -355,7 +366,7 @@ struct Impiegato{
     char cognome[20];
     float stipendio;
     char codiceFiscale[16];
-};
+} Impiegato;
 
 struct Impiegato impiegato1; // dichiarazione
 impiegato1.stipendio = 1200.50; // dot notation
