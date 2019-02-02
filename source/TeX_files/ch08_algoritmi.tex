@@ -1,7 +1,7 @@
 \chapter{Algoritmi di ricerca e ordinamento}
 
 \section{Algoritmi di ricerca}
-Un \textbf{algoritmo di ricerca} permette di trovare un elemento avente determinate caratteristiche all'interno di un insieme di elementi identificati da una chiave.
+Un \textbf{algoritmo di ricerca} permette di trovare un elemento avente determinate caratteristiche all'interno di un insieme di elementi ognuno dei quali identificato da una chiave.
 
 \subsection{Ricerca sequenziale}
 Consiste nel scorrere tutti gli elementi fino a quando non si trova quello desiderato:
@@ -91,7 +91,7 @@ La complessità asintotica dell'algoritmo:
 	\item caso medio: $\varTheta(n^2)$
 	\item caso peggiore: $\varTheta(n^2)$
 \end{itemize}
-Dato un vettore $v$, l'algoritmo si basa sul costruisce (a partire dall'indice zero di $v$) un sottoarray ordinato.
+Dato un vettore $v$, l'algoritmo si basa sul costruire (a partire dall'indice zero di $v$) un sottoarray ordinato.
 \begin{lstlisting}[title={Insertion sort}]
 void insertion_sort(char v[], int len){
     int i, j;

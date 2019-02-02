@@ -1,10 +1,10 @@
 \chapter{Teoria sulla complessità}
 \section{La funzione tempo di esecuzione}
 Dato un qualsiasi algoritmo, è possibile ottenere la funzione $T(n)$ ad esso associata, ossia la \textbf{funzione tempo di esecuzione} rispetto alla dimensione dell'input $n$. Questa funzione prende in considerazione solamente il numero di istruzioni e non aspetti dinamici d'esecuzione.\\
-Studiando l'andamento asintotico di $T(n)$, si può notare che rilevante ciò che cresce più velocemente:
+Studiando l'andamento asintotico di $T(n)$, si può notare che è rilevante ciò che cresce più velocemente:
 \textit{es} $T(n)=a+bn+cn^2 \Rightarrow T(n) = \varTheta(n^2)$.
 \subsection*{Il caso peggiore, migliore e medio}
-Si possono costruire \textit{tre} funzioni $T(n)$:
+Si possono costruire \textit{tre} funzioni $T(n)$ per stimare l'efficienza dei un programma:
 \begin{itemize}[noitemsep, nolistsep]
 	\item $T_\text{peggiore}(n)$ nel caso peggiore
 	\item $T_\text{migliore}(n)$ nel caso migliore
@@ -115,7 +115,7 @@ T(n) =
 
 \begin{enumerate}[noitemsep]
 	\item si calcola il numero dei nodi per livello: $3^i$ in questo caso.
-	\item si calcola il peso di ciascun livello moltiplicando ill numero di nodi per livello per il peso di ciascun nodo di quel livello
+	\item si calcola il peso di ciascun livello moltiplicando il numero di nodi per livello per il peso di ciascun nodo di quel livello
 	\item si calcola il numero di livelli: $log_4n+1$ in questo caso. Si noti che il $4$ è il valore di $b$ dell'equazione di ricorrenza. Il numero dei livelli deve essere dimostrato per induzione.
 	\item si calcola il numero di foglie: in questo caso $3^\text{altezza}$, dove l'altezza dell'albero è il numero di livelli meno 1.
 	\item T(n) è pari dunque alla somma dei pesi di $i-1$ livelli più la somma dei pesi delle foglie.

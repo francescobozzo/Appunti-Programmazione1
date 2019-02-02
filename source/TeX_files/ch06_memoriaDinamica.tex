@@ -2,7 +2,7 @@
 \section{Heap vs stack}
 Il linguaggio C permette al programmatore di utilizzare dei meccanismi di allocazione e deallocazione dinamica della memoria per gestire situazioni in cui un’allocazione statica sarebbe svantaggiosa. Un semplice esempio riguarda quei casi in cui non si è a conoscenza, al tempo della compilazione, delle dimensioni con cui si svilupperanno certe strutture dati durante l'esecuzione.\\
 A differenza delle \textbf{variabili automatiche} che vengono memorizzate nello \textit{stack}, le variabili allocate dinamicamente si trovano nell'\textbf{heap}.\\
-Naturalmente da grandi poteri derivano grandi responsabilità: ogni istruzione di allocazione deve essere accompagnata da una successiva istruzione di deallocazione. Nel caso contrario si possono riscontrare errori molto subdoli e nascosti come la produzione di \textit{garbage} e di \textit{dangling references}.
+Naturalmente da grandi poteri derivano grandi responsabilità: ogni istruzione di allocazione deve essere accompagnata da una successiva istruzione di deallocazione. Nel caso contrario si possono riscontrare errori molto subdoli e nascosti come la produzione di \textit{garbage} (ovvero celle di memoria piene ma nn recuperabili) e di \textit{dangling references} (ovvero celle di memoria a cui si può accedere da più puntatori, con il rischio di modificarle non intenzionalmente).
 
 \section{Allocazione e deallocazione...}
 Nel caso di fallimento di un'operazione di allocazione viene restituito il valore \textit{NULL}.\\

@@ -78,7 +78,8 @@ Lista inserisci_ordinato(Lista ls, Tdato d){
     if (is_empty_lista(temp)){
         return inserisci_testa(ls, d);
     }
-    while ((!is_empty_lista(temp)) && temp->dato.isLowerThan(d)){
+    while ((!is_empty_lista(temp)) && temp->dato.isLowerThan(d)){ 
+//isLowerThan=metodo per verificare se dato e' minore di d
         pred = temp;
         temp = temp->next;
     }
