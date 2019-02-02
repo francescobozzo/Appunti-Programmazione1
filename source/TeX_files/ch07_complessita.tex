@@ -138,12 +138,12 @@ T(n) = n + 2T(\frac{n}{2})
 Si ha: $T(n) = \varTheta(n\log_2n) \Rightarrow c_1n\log_2n\le T(n) \le c_2n\log_2n $ per il teorema dell'esperto.\\
 Si studia il limite superiore trovando per quali $c>0$ vale $T(n) \le c_2n\log_2n$:
 \begin{enumerate}[noitemsep, nolistsep]
-	\item Si prova il caso base.
+	\item Si prova il caso base tramite il principio dell'induzione.
 	\item Si utilizza l'ipotesi induttiva: $k<n, T(k)\le ck\log_2k$.
 \end{enumerate}
 Quindi: $T(n)=2T(\frac{n}{2})+n \le 2c\frac{n}{2}\log_2\frac{n}{2}+n$, e così via.\\
 Per il limite inferiore il procedimento è del tutto analogo:
 \begin{enumerate}[noitemsep, nolistsep]
-	\item Si prova il caso base.
+	\item Si prova il caso base tramite il principio dell'induzione.
 	\item Si utilizza l'ipotesi induttiva: $k<n, T(k)\ge dk\log_2k$.
 \end{enumerate}
