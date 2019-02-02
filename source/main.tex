@@ -5,6 +5,7 @@
 \usepackage[italian]{babel}	% Lingua del documento
 
 \usepackage{graphicx} % Grafica
+\usepackage{xcolor} % \color
 
 \usepackage{amsmath,amssymb,amsthm}	% Pacchetti per la matematica
 \usepackage[nochapters,eulermath]{classicthesis}
@@ -19,20 +20,52 @@
 	headsep=18pt,			% Spazio tra intestazione e corpo del testo
 	footskip=42pt			% Spazio tra corpo del testo e piè pagina
 }
+\usepackage{units}
+
+\usepackage{enumitem}
+
+\usepackage{listings} % listati di codice
+\lstdefinestyle{customc}{
+	numbers=left,
+	breaklines=true,
+	frame=tb,
+	xleftmargin=\parindent,
+	language=C,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	stringstyle=\color{orange}
+}
+\lstset{escapechar=@,style=customc}
+
+\definecolor{light-gray}{gray}{0.95}
 
 \begin{document}
 
-\author{Bozzo Francesco, CS}
-\title{Appunti di Programmazione 1}
-\date{Gennaio 2019}
+\author{Bozzo Francesco \and Conti Samuele}
+\title{Appunti di Programmazione 1\\Università degli Studi di Trento}
+\date{Febbraio 2019}
 
 \frontmatter
 \maketitle
 \tableofcontents
 
 \mainmatter
-\include{./TeX_files/chapter01}
-\include{./TeX_files/chapter02}
+\include{./TeX_files/ch01_introComputer}
+\include{./TeX_files/ch02_introProgrammazione}
+\include{./TeX_files/ch03_vettori}
+\include{./TeX_files/ch04_stringhe}
+\include{./TeX_files/ch05_file}
+\include{./TeX_files/ch06_memoriaDinamica}
+\include{./TeX_files/ch07_complessita}
+\include{./TeX_files/ch08_algoritmi}
+\include{./TeX_files/ch09_liste}
+\include{./TeX_files/ch10_listeCircolari}
+\include{./TeX_files/ch11_stackCode}
+\include{./TeX_files/ch12_abr}
+\include{./TeX_files/ch13_hash}
+\include{./TeX_files/ch14_appendice}
 
 \backmatter
 % bibliography, glossary and index would go here.

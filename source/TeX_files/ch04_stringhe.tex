@@ -1,0 +1,24 @@
+\chapter{Stringhe}
+
+\section{Il concetto di stringa}
+Come già visto nel capitolo \ref{vettori}, le stringhe sono strettamente legate al concetto di array, precisamente queste altro non sono che array di elementi di tipo char nalla cui ultima cella è contenuto il carattere "$\backslash0$", identificato \textit{terminatore di stringa}.\\
+Essendo usate comunemente, le stringhe hanno una serie di comandi che ne semplificano l'input e l'output (utilizzando il descrittore di formato \colorbox{light-gray}{\%s}).
+
+\section{Operazioni con le stringhe}
+Oltre a questo esiste una libreria standard interamente dedicata, \colorbox{light-gray}{string.h}, che comprende alcune utili funzioni quali \colorbox{light-gray}{strcpy()}, \colorbox{light-gray}{strlen()} e \colorbox{light-gray}{strcmp()}:
+\begin{lstlisting}[title={Alcune operazione con le stringhe}]
+char str1[5], str2[5];
+
+fflush(stdin); // per Windows, da utilizzare prima di qualsiasi lettura di stringhe
+scanf("%s", str1);
+printf("%s", str1);
+
+strcpy(str1, "cane"); //copia in str1 la stringa "cane"
+strcpy(str2, str1); // copia il contenuto di str1 in str2
+
+int lunghezza = strlen(str1); // restituisce la lunghezza di str1
+
+bool uguali = strcmp(str1, "cane") == 0; // restituisce zero se uguali, >0 se str1>cane, <0 altrimenti
+\end{lstlisting}
+\section{Nota tecnica}
+Considerando che l'ultimo carattere di una stringa deve essere il terminatore "$\backslash0$", e per scrivere una parola di \textit{n} lettere, bisogna utilizzare un array di lunghezza \textit{n+1}.

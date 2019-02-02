@@ -1,0 +1,181 @@
+\chapter{Algoritmi di ricerca e ordinamento}
+
+\section{Algoritmi di ricerca}
+Un \textbf{algoritmo di ricerca} permette di trovare un elemento avente determinate caratteristiche all'interno di un insieme di elementi ognuno dei quali identificato da una chiave.
+
+\subsection{Ricerca sequenziale}
+Consiste nel scorrere tutti gli elementi fino a quando non si trova quello desiderato:
+\begin{lstlisting}[title={Ricerca sequenziale}]
+int sequential_search(char v[], int len, char key){
+    int i;
+    for (i=0; i<len; i++){
+        if (v[i] == key){
+            return i;
+        }
+    }
+    return -1;
+}
+\end{lstlisting}
+In questo caso, la funzione $T(n)$ è pari:
+\begin{itemize}[noitemsep, nolistsep]
+	\item nel caso peggiore: $n$.
+	\item nel caso migliore $1$.
+	\item nel caso medio $\frac{n}{2}$.
+\end{itemize}
+
+\subsection{Ricerca sequenziale con sentinella}
+Come sopra, ma evita un confronto: posiziono al termine del vettore l'elemento da cercare:
+\begin{lstlisting}[title={Ricerca sequenziale con sentinella}]
+// la funzione chiamante deve assicurare la presenza di un elemento vuoto alla fine del vettore
+int sequential_search_sentinella(char v[], int len, char key){
+    int i;
+    v[len] = key;
+    for (i=0; v[i]!=key; i++){	}
+
+    if (i == len) {
+        return -1;
+    }
+    return i;
+}
+\end{lstlisting}
+
+\subsection{Ricerca sequenziale su vettore ordinato}
+Questa ricerca sfrutta il fatto di ricevere un vettore ordinato in input:
+\begin{lstlisting}[title={Ricerca sequenziale su vettore ordinato}]
+int sequential_search_order(char v[], int len, char key){
+    int i;
+    for (i=0; key>=v[i] && i<len; i++){
+        if (v[i] == key){
+            return i;
+        }
+    }
+    return -1;
+}
+\end{lstlisting}
+
+\subsection{Ricerca binaria}
+Si presuppone che l'input sia un insieme ordinato di elementi con la possibilità di accesso casuale (\textit{es.} array):
+\begin{lstlisting}[title={Ricerca binaria}]
+int binary_search(char v[], int len, char key){
+    int bottom = 0;
+    int top = len - 1;
+    int mid;
+
+    while (bottom <= top){
+        mid = (top + bottom) / 2;
+        if (v[mid] == key) {
+            return mid;
+        }
+        if (key < v[mid]){
+            top = mid - 1;
+        } else {
+            bottom = mid + 1;
+        }
+    }
+    return -1;
+}
+\end{lstlisting}
+In questo caso, la funzione $T(n)$ è pari:
+\begin{itemize}[noitemsep, nolistsep]
+	\item nel caso peggiore: $\log_2n$.
+	\item nel caso migliore $1$.
+	\item nel caso medio $\log_2n$.
+\end{itemize}
+
+\section{Algoritmi di ordinamento}
+
+\subsection{Insertion sort}
+L'algoritmo di \textbf{insertion sort} permette di riordinare in maniera efficiente un piccolo insieme di elementi.
+La complessità asintotica dell'algoritmo:
+\begin{itemize}[noitemsep, nolistsep]
+	\item caso medio: $\varTheta(n^2)$
+	\item caso peggiore: $\varTheta(n^2)$
+\end{itemize}
+Dato un vettore $v$, l'algoritmo si basa sul costruire (a partire dall'indice zero di $v$) un sottoarray ordinato.
+\begin{lstlisting}[title={Insertion sort}]
+void insertion_sort(char v[], int len){
+    int i, j;
+    char temp;
+    for (i=1; i<len; i++){
+        j = i-1;
+        temp = v[i];
+        while (j>=0 && v[j]>temp){
+            v[j+1] = v[j];
+            j--;
+        }
+        v[j+1] = temp;
+    }
+}
+\end{lstlisting}
+
+\subsection{Merge Sort}
+Viene qui di seguito presentata la versione ricorsiva dell'algoritmo di ordinamento \textbf{merge sort}. Esso è definito come un algoritmo \textit{divide et impera}, in quanto:
+\begin{itemize}[noitemsep]
+	\item[divide]: separa la sequenza di $n$ elementi in 2 da $\frac{n}{2}$.
+	\item[impera]: ordina le due sottosequenze generate da divide.
+	\item[combina]: unisce le due sottosequenze rispettivamente ordinate in un tempo $\varTheta(n)$.
+\end{itemize}
+Utilizzando l'implementazione ricorsiva, sono indispensabili i casi base:
+\begin{itemize}[noitemsep, nolistsep]
+	\item dato un vettore da un elemento, esso è gia ordinato.
+	\item dato un vettore di due elementi, o è già ordinato o è necessario invertirne gli elementi.
+\end{itemize}
+La complessità asintotica dell'algoritmo:
+\begin{itemize}[noitemsep, nolistsep]
+	\item caso medio: $\varTheta(n\log n)$
+	\item caso peggiore: $\varTheta(n\log n)$
+\end{itemize}
+\begin{lstlisting}[title={Merge Sort}]
+// passo di combina, con allocazione dinamica della memoria
+void merge(char v[], int p, int mid, int r){
+    int i, j, k;
+    int len1 = mid-p+1;
+    int len2 = r-mid;
+    char *L = new char[len1+1];
+    char *R = new char[len2+1];
+
+    for (i=0; i<len1; i++){
+        L[i] = v[p+i];
+    }
+    for (i=0; i<len2; i++){
+        R[i] = v[mid+1+i];
+    }
+    L[len1] = R[len2] = (char)'z'; // sentinella
+
+    i = j = 0;
+    for (k=p; k<=r; k++){
+        if (L[i] < R[j]){
+            v[k] = L[i++];
+        } else {
+            v[k] = R[j++];
+        }
+    }
+    delete [] L;
+    delete [] R;
+}
+
+void merge_sort(char v[], int p, int r){
+    // caso base: 1 elemento
+    if (r-p <= 0){
+        return;
+    // caso base: 2 elementi
+    } else if (r-p == 1) {
+        if (v[p] > v[r]){
+            char temp = v[p];
+            v[p] = v[r];
+            v[r] = temp;
+        }
+        return;
+    // caso induttivo
+    } else {
+        int mid = (p+r)/2;
+        merge_sort(v, p, mid);
+        merge_sort(v, mid+1, r);
+        merge(v, p, mid, r);
+    }
+}
+
+\end{lstlisting}
+
+\subsection{Teorema della complessità nel caso pessimo di un algoritmo di ordinamento}
+La complessità nel caso pessimo di un algoritmo di ordinamento sul posto che confronta e scambia elementi consecutivi è $\varOmega(n^2)$. Algoritmi più efficienti richiedono scambi di elementi lontani fra loro.

@@ -1,0 +1,31 @@
+\chapter{Hashing}
+La \textbf{tabella di hash} è una struttura che permette di effettuare ricerca e inserimento $O(1)$ sotto \textit{ipotesi ragionevoli}: non si basa su confronti e mantenimento dell'ordine dei dati. Se mal costruita, la ricerca nel caso peggiore è $\varTheta(n)$.\\
+La ricerca consiste nell'associare ad ogni \textit{chiave} i suoi rispettivi \textit{dati satellite}. Un semplice esempio è un database finalizzato a memorizzare dei dispositivi: ciascun record infatti ha associato una chiave (es. MAC Address) e dei dati satellite (es. marca, caratteristiche, ecc.). L'insieme di chiavi $U$ deve essere piccolo.
+
+\section{Tavole a indirizzamento diretto}
+Il metodo attraverso una \textbf{tavola a indirizzamento diretto} utilizza un vettore $V$ di puntatori, di dimensione $|U|$.\\
+Quando si inserisce un elemento nella tavola, viene generato dinamicamente il corrispondente putatore ai dati satellite, che viene inserito nella cella di $V$ corrispondente alla propria chiave. Dunque vi è una corrispondenza biunivoca tra celle di $V$ e le chiavi possibili.
+
+\paragraph{Vantaggi}
+\begin{itemize}
+	\item le operazioni di inserimento, ricerca e cancellazione risultano di costo unitario.
+\end{itemize}
+\paragraph{Svantaggi}
+\begin{itemize}
+	\item il costo oneroso iniziale nel settare a \textit{NULL} tutti gli elementi di $V$.
+	\item se la cardinalità di $U$ è troppo elevata, non si può utilizzare la tavola ad indirizzamento diretto in quanto occuperebbe troppa memoria.
+\end{itemize}
+
+\section{Tabella di Hash}
+Con la \textbf{tabella di hash} si introduce la \textbf{funzione di hashing} $F$: riceve in input una chiave $c$ e restituisce l'indice del vettore $V$ che punta ai dati satellite di $c$. A differenza della tavola a indirizzamento diretto, la chiave non viene più utilizzata come indice di $V$.
+
+\paragraph{Collisioni}
+Seppur il numero di chiavi utilizzate sia piccolo rispetto a $|U|$, $F$ può presentare delle collisioni. Si incontra una \textit{collisione} quando a chiavi diverse vengono assegnati gli stessi dati satellite. Minore è la probabilità di trovare collisioni, maggiore è qualità di $F$.
+
+\paragraph{Chaining}
+La tecnica di \textit{chaining} permette di risolvere il problema delle collisioni. Ad ogni elemento dell'immagine di $F$ viene associata una lista concatenata $L$ di chiavi (con i corrispondenti dati satellite): nel caso della ricerca, prima si applica $F$ e poi, attraverso un algoritmo $\varTheta(n)$, si cerca l'elemento con la chiave voluta all'interno della lista associata.\\
+Il \textit{fattore di carico} $alpha = \frac{n}{m}$, dove $n$ rappresenta il numero di chiavi e $m$ rappresenta il numero di celle della tavola, è pari alla lunghezza media di una lista $L$. Nel caso peggiore, la ricerca nella lista $\varTheta(1+\alpha)$. Dunque, più ridotte solo le liste, più veloce è la ricerca. La soluzione ottimale è trovare una funzione $F$ che distribuisce le chiavi in maniera più uniforme possibile.\\
+Un esempio riguarda la seguente funzione di hash: $h(k) = k \% m + 1$. Se $m$ si trova vicino ad una potenza di 2, allora $h(k)$ non ha una distribuzione uniforme delle proprie chiavi.
+
+\paragraph{Funzione di hash universale}
+Ogni funzione di hash ha delle distribuizioni di probabilità non uniformi per alcuni input. Si utilizza perciò la \textit{funzione di hash universale} se per ogni coppia di chiavi distinte vi sono al più $\frac{|H|}{m}$ funzioni di hash che causano collisione fra le due chiavi. $H$ è l'insieme delle funzioni di hash utilizzate, da cui se ne sceglie una casualmente.
