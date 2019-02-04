@@ -268,7 +268,7 @@ int main(){
     printf("%d", a); // stampa 5
 }
 \end{lstlisting}
-Al contrario, utilizzando un puntatore è possibile eseguire un passaggio \textbf{per riferimento}, che consiste nel passare (sempre per valore) il punatore alla funzione e poi usare il suo  valore per accedere alla variabile a cui punta: se viene modificato in questo modo un argomento nel corpo di una funzione, l'ambiente della funzione chiamante risentirà di questi cambiamenti.
+Al contrario, utilizzando un puntatore è possibile eseguire un passaggio \textbf{per riferimento}, che consiste nel passare (sempre per valore) il puntatore alla funzione e poi usare il suo  valore per accedere alla variabile a cui punta: se viene modificato in questo modo un argomento nel corpo di una funzione, l'ambiente della funzione chiamante risentirà di questi cambiamenti.
 \begin{lstlisting}[title={Il passaggio per riferimento}]
 void cambiaValore(int* a){
     *a = 6;
