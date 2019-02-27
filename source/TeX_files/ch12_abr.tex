@@ -132,7 +132,7 @@ BST insert_node(BST tree, Tdato d){
     if (tree == NULL){
         return new Tnodo(d, NULL, NULL);
     } else {
-        insert_ric(tree, d);
+        tree = insert_ric(tree, d);
         return tree;
     }
 }
